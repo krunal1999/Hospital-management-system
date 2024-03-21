@@ -7,54 +7,91 @@ import authenticationService from "../../services/AuthenticationService.js";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const RegisterPage = () => {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    role: "patient",
+  const userSchema = z.object({
+    fullName: z
+      .string("Fullname Can Not Be Empty")
+      .min(3, "Fullname Must Be Minimum 3 Character")
+      .max(20, "Fullname Must Be In 20 Character Limit"),
+    email: z
+      .string("Please Enter Valid Email ID")
+      .email("Please Enter Valid Email ID"),
+    password: z
+      .string(
+        "Password Must Contain 6 to 16 character including lowercase,uppercase,number"
+      )
+      .min(
+        6,
+        "Password Must Contain 6 to 16 character including lowercase,uppercase,number"
+      )
+      .max(
+        16,
+        "Password Must Contain 6 to 16 character including lowercase,uppercase,number"
+      )
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
+        "Password Must Contain 6 to 16 character including lowercase,uppercase,number"
+      ),
+    role: z.string(),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      fullName: "",
+      email: "",
+      password: "",
+      role: "patient",
+    },
+    resolver: zodResolver(userSchema),
   });
 
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     setLoading(true);
-
     try {
-      // logic or registraction
+      // logic of registraction
       authenticationService
-        .registerUser(formData)
+        .registerUser(data)
         .then((response) => {
-          console.log(response.data);
+          // check the status and save the user
+          if (response.status === 201) {
+            reset();
+            setLoading(false);
+            toast.success("User Registration Success");
+            navigate("/login");
+          } else {
+            setLoading(false);
+            toast.success("User Registration Failed");
+          }
 
-          setLoading(false);
-          toast.success("asasdda");
-          navigate("/login");
+          //----------
         })
         .catch((axiosError) => {
           if (axiosError.response) {
             const errorMessage = axiosError.response.data.errors.errors;
-
             setLoading(false);
             toast.error(errorMessage);
-            console.log(errorMessage);
             navigate("/register");
-          } 
+          }
         });
     } catch (error) {
       toast.error(error.message);
       setLoading(false);
     }
-    
   };
+
   return (
     <section className="px-5 mt-5 xl:px-0">
       <div className="max-w-[1170px] mx-auto ">
@@ -72,52 +109,53 @@ const RegisterPage = () => {
               Create an <span className="text-[#0067FF]">Account</span>
             </h3>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-5">
                 <input
+                  {...register("fullName")}
                   type="text"
                   name="fullName"
-                  value={formData.fullName}
-                  onChange={handleInputChange}
                   placeholder="Full Name"
                   className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-[#0067FF] text-[16px] leading-7 text-headingColor placeholder:text-textColor"
-                  required
                 />
               </div>
+              {errors.fullName && (
+                <div className="text-red-500">{errors.fullName.message}</div>
+              )}
 
               <div className="mb-5">
                 <input
-                  type="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
+                  {...register("email")}
+                  type="text"
                   name="email"
                   placeholder="Enter Your Email"
                   className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-[#0067FF] text-[16px] leading-7 text-headingColor placeholder:text-textColor"
-                  required
                 />
               </div>
+              {errors.email && (
+                <div className="text-red-500">{errors.email.message}</div>
+              )}
 
               <div className="mb-5">
                 <input
+                  {...register("password")}
                   type="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
                   name="password"
                   placeholder="Password"
                   className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-[#0067FF] text-[16px] leading-7 text-headingColor placeholder:text-textColor"
-                  required
                 />
               </div>
+              {errors.password && (
+                <div className="text-red-500">{errors.password.message}</div>
+              )}
 
               <div className="mb-5 flex items-center justify-between">
                 <label className="text-headingColor font-bold text-[16px] leading-7">
                   Are you a:
                   <select
+                    {...register("role")}
                     name="role"
-                    value={formData.type}
-                    onChange={handleInputChange}
                     className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
-                    required
                   >
                     <option value="patient">Patient</option>
                     <option value="doctor">Doctor</option>

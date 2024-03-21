@@ -8,6 +8,7 @@ const schema = z.object({
   password: z.string().min(8),
 });
 
+
 function DemoForm() {
   const {
     register,
