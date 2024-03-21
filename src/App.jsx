@@ -11,6 +11,7 @@ import LoginPage from "./pages/authenticationPages/LoginPage.jsx";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DemoForm from "./pages/authenticationPages/DemoForm.jsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -18,6 +19,7 @@ function App() {
       <Route path="/">
         <Route path="register" element={<RegisterPage />} />
         <Route path="login" element={<LoginPage />} />
+        <Route path="demo" element={<DemoForm />} />
       </Route>
     )
   );
@@ -25,7 +27,6 @@ function App() {
   return (
     <>
       <ToastContainer />
-
       <RouterProvider router={router}></RouterProvider>
     </>
   );

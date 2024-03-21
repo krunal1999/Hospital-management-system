@@ -56,11 +56,12 @@ const RegisterPage = () => {
     
   };
   return (
-    <section className="px-5 xl:px-0">
+    <section className="px-5 mt-5 xl:px-0">
       <div className="max-w-[1170px] mx-auto ">
         <div className="grid grid-cols-1 lg:grid-cols-2 ">
           {/* ============ img box ========= */}
-          <div className="hidden lg:block bg-[#0067FF] rounded-l-lg">
+
+          <div className="flex flex-row  md:flex-col bg-[#0067FF] rounded-l-lg">
             <figure className="rounded-l-lg">
               <img className="w-full rounded-l-lg" src={signupImg} alt="" />
             </figure>
