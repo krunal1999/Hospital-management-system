@@ -62,7 +62,7 @@ const RegisterPage = () => {
     setLoading(true);
     try {
       // logic of registraction
-      authenticationService
+      await authenticationService
         .registerUser(data)
         .then((response) => {
           // check the status and save the user
