@@ -1,7 +1,8 @@
 import logo from "../../assets/images/logo.png";
 import { NavLink, Link } from "react-router-dom";
 import { BiMenu } from "react-icons/bi";
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
 // import { AuthContext } from "./../../context/AuthContext";
 
@@ -15,7 +16,7 @@ const navLinks = [
     display: "Services",
   },
   {
-    path: "/doctors",
+    path: "/finddoctors",
     display: "Find a Doctor",
   },
   {
@@ -26,6 +27,18 @@ const navLinks = [
 
 const Header = () => {
   //   const { user, token, role } = useContext(AuthContext);
+  
+  const authState = useSelector((state) => state.auth);
+  const { user, status } = authState;
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    if (user === null) {
+      setRole("");
+    } else {
+      setRole(user.role);
+    }
+  }, [user]);
 
   const headerRef = useRef(null);
   const menuRef = useRef(null);
@@ -81,31 +94,31 @@ const Header = () => {
 
           {/* ========= nav right ========== */}
           <div className="flex items-center gap-4">
-            {/* {token && user ? (
+            {user !== null && status && role ? (
               <div>
                 <Link
                   to={`${
                     role === "doctor"
-                      ? "/doctors/profile/me"
-                      : "/users/profile/me"
-                  } `}
+                      ? "/doctors/profile"
+                      : "/patient/profile"
+                  }`}
                 >
                   <figure className="w-[35px] h-[35px] rounded-full cursor-pointer ">
                     <img
                       className="w-full rounded-full"
-                      src={user?.photo}
+                      src="https://png.pngtree.com/png-clipart/20220911/original/pngtree-male-doctor-avatar-icon-illustration-png-image_8537702.png"
                       alt=""
                     />
                   </figure>
                 </Link>
               </div>
-            ) : ( */}
-            <Link to="/login">
-              <button className="bg-buttonBgColor py-2 px-6 rounded-[50px] text-white font-[600] h-[44px] flex items-center justify-center">
-                Log In
-              </button>
-            </Link>
-            {/* )} */}
+            ) : (
+              <Link to="/login">
+                <button className="bg-buttonBgColor py-2 px-6 rounded-[50px] text-white font-[600] h-[44px] flex items-center justify-center">
+                  Log In
+                </button>
+              </Link>
+            )}
 
             <span className="md:hidden" onClick={toggleMenu}>
               <BiMenu className="w-6 h-6 cursor-pointer" />

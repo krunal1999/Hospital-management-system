@@ -56,25 +56,26 @@ function LoginPage() {
       await authenticationService
         .loginUser(data)
         .then((response) => {
+          if (response.status === 200) {
+            let res = response.data.data;
+            // const cookieValue = document.cookie.split("=")[1];
+            // console.log("Cookie Value:", cookieValue);
 
-          if(response.status === 200){
-            
+            dispatch(login(res));
+            reset();
+            toast.success("User Login Success");
+
+            console.log(res.role);
+            if (res.role === "doctor") {
+              navigate("/doctor/profile");
+            } else {
+              navigate("/patient/profile");
+            }
           }
-          let res = response.data.data;
-          // const cookieValue = document.cookie.split("=")[1];
-          // console.log("Cookie Value:", cookieValue);
-
-          dispatch(login(res))
-
-          reset();
-          toast.success("User Login Success");
-          navigate("/home");
-          //----------
         })
         .catch((axiosError) => {
           if (axiosError.response) {
             const errorMessage = axiosError.response.data.errors.errors;
-
             toast.error(errorMessage);
           }
         });
