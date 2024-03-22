@@ -16,6 +16,9 @@ import { store } from "./store/store.js";
 import { Provider } from "react-redux";
 import Home from "./pages/public/Home.jsx";
 import Layout from "./layout/Layout.jsx";
+import Doctors from "./pages/doctor/Doctors.jsx";
+import Services from "./pages/public/Services.jsx";
+import Contact from "./pages/public/Contact.jsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -23,8 +26,12 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route path="register" element={<RegisterPage />} />
         <Route path="login" element={<LoginPage />} />
-        <Route path="demo" element={<DemoForm />} />
         <Route path="home" element={<Home />} />
+
+        <Route path="doctors" element={<Doctors />} />
+        <Route path="doctor/:id" element={<Home />} />
+        <Route path="services" element={<Services />} />
+        <Route path="contact" element={<Contact />} />
       </Route>
     )
   );
@@ -32,7 +39,13 @@ function App() {
   return (
     <>
       <Provider store={store}>
-        <ToastContainer />
+        <ToastContainer
+          theme="dark"
+          position="top-right"
+          autoClose={3000}
+          closeOnClick
+          pauseOnHover={false}
+        />
         <RouterProvider router={router}></RouterProvider>
       </Provider>
     </>
