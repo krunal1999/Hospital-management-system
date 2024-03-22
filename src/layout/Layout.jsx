@@ -4,12 +4,15 @@ import React from "react";
 
 import Footer from "../componets/footer/Footer";
 import Header from "../componets/header/Header";
+import { Outlet } from "react-router-dom";
 
-const Layout = ({ children }) => {
+const Layout = () => {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main>
+        <Outlet />
+      </main>
       <Footer />
     </>
   );

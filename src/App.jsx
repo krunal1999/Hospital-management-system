@@ -15,11 +15,12 @@ import DemoForm from "./pages/authenticationPages/DemoForm.jsx";
 import { store } from "./store/store.js";
 import { Provider } from "react-redux";
 import Home from "./pages/public/Home.jsx";
+import Layout from "./layout/Layout.jsx";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/">
+      <Route path="/" element={<Layout />}>
         <Route path="register" element={<RegisterPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="demo" element={<DemoForm />} />
