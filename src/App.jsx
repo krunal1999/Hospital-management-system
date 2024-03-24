@@ -22,6 +22,7 @@ import Contact from "./pages/public/Contact.jsx";
 import ProtectedRoute from "./layout/ProtectedRoute.jsx";
 import Demo from "./pages/doctor/Demo.jsx";
 import FaqItem from "./pages/public/FaqItem.jsx";
+import Dashboard from "./dashboard/Doctor-Account/Dashboard.jsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -32,11 +33,12 @@ function App() {
           <Route path="register" element={<RegisterPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="home" element={<Home />} />
+          {/* <Route path="demo" element={<Demo />} /> */}
+          
           <Route path="finddoctors" element={<Doctors />} />
           {/* <Route path="doctor/:id" element={<Home />} /> */}
           <Route path="services" element={<Services />} />
           <Route path="contact" element={<Contact />} />
-
           // protected routes
           <Route
             path="patient"
@@ -44,21 +46,13 @@ function App() {
           >
             <Route path="profile" element={<Demo />} />
           </Route>
-
-
-
           <Route
             path="doctor"
             element={<ProtectedRoute allowedRoles={["doctor"]} />}
           >
-            <Route path="profile" element={<Demo />} />
+            <Route path="profile" element={<Dashboard />} />
           </Route>
-
         </Route>
-
-        
-
-
       </>
     )
   );

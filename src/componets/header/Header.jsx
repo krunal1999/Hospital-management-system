@@ -27,7 +27,7 @@ const navLinks = [
 
 const Header = () => {
   //   const { user, token, role } = useContext(AuthContext);
-  
+
   const authState = useSelector((state) => state.auth);
   const { user, status } = authState;
   const [role, setRole] = useState("");
@@ -98,17 +98,25 @@ const Header = () => {
               <div>
                 <Link
                   to={`${
-                    role === "doctor"
-                      ? "/doctors/profile"
-                      : "/patient/profile"
+                    role === "doctor" ? "/doctor/profile" : "/patient/profile"
                   }`}
                 >
                   <figure className="w-[35px] h-[35px] rounded-full cursor-pointer ">
-                    <img
+                    {/* <img
                       className="w-full rounded-full"
                       src="https://png.pngtree.com/png-clipart/20220911/original/pngtree-male-doctor-avatar-icon-illustration-png-image_8537702.png"
                       alt=""
+                    /> */}
+                    <img
+                      className="w-full rounded-full"
+                      src={
+                        user?.loggedUser.photo
+                          ? user?.loggedUser.photo
+                          : "https://png.pngtree.com/png-clipart/20220911/original/pngtree-male-doctor-avatar-icon-illustration-png-image_8537702.png"
+                      }
+                      alt="Profile Photo"
                     />
+                    
                   </figure>
                 </Link>
               </div>
