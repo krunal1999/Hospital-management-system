@@ -3,10 +3,13 @@ import { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { formatDate } from "../../utils/formatDate.js";
 
-// import FeedbackForm from "./FeedbackForm";
+import FeedbackForm from "./FeedbackForm";
 // import avatar from "../../assets/images/avatar-icon.png";
 const Feedback = ({ reviews, totalRating }) => {
   const [showForm, setShowForm] = useState(false);
+  console.log("review", reviews);
+  
+  // console.log(totalRating);
 
   return (
     <div>
@@ -19,17 +22,17 @@ const Feedback = ({ reviews, totalRating }) => {
           <div key={index} className="flex justify-between gap-10 mb-[30px]">
             <div className="flex gap-3">
               <figure className="w-10 h-10 rounded-full">
-                <img src={review.user.photo} alt="" className="w-full" />
+                <img src={review?.patientPhoto} alt="" className="w-full" />
               </figure>
               <div>
                 <h5 className="text-[16px] leading-6 text-[#0067FF] font-bold">
-                  {review.user.name}
+                  {review?.patientName}
                 </h5>
                 <p className="text-[14px] text-textColor leading-[22px]">
-                  {formatDate(review.createdAt)}
+                  {formatDate(review?.createdAt)}
                 </p>
                 <h6 className="text__para mt-3 text-[15px] font-medium">
-                  {review.reviewText}
+                  {review?.reviewText}
                 </h6>
               </div>
             </div>
@@ -53,7 +56,7 @@ const Feedback = ({ reviews, totalRating }) => {
 
       {/* ========== tour reviews section end =========== */}
 
-      {/* {showForm && <FeedbackForm />} */}
+      {showForm && <FeedbackForm />}
     </div>
   );
 };

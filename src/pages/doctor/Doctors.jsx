@@ -42,7 +42,7 @@ const Doctors = () => {
   // }, [query]);
 
   const [doctorsQueryData, setDoctorsQueryData] = useState([]);
-  console.log(doctorsQueryData);
+  // console.log(doctorsQueryData);
   const fetchData = useCallback(async (query) => {
     try {
       const res = await doctoreService.getAllDoctor(query);

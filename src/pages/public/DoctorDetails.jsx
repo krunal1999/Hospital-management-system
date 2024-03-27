@@ -7,15 +7,10 @@ import Feedback from "./Feedback.jsx";
 import HashLoader from "react-spinners/HashLoader";
 import SidePanel from "./SidePanel";
 import doctoreService from "../../services/DoctorService.js";
+import reviewService from "../../services/ReviewService.js";
 const DoctorDetails = () => {
   const [tab, setTab] = useState("about");
   const { id } = useParams();
-
-  // const {
-  //   data: doctor,
-  //   loading,
-  //   error,
-  // } = useFetchData(`${BASE_URL}/doctors/${id}`);
 
   const [doctor, setDoctor] = useState(null);
 
@@ -23,6 +18,9 @@ const DoctorDetails = () => {
     const fetchData = async () => {
       try {
         const fetchedData = await doctoreService.getDoctorById(id);
+        const getReview = await reviewService.getAllReview();
+        console.log(getReview.data.data);
+
         setDoctor(fetchedData.data.data);
       } catch (error) {
         console.log(error);
@@ -142,10 +140,10 @@ const DoctorDetails = () => {
           </div>
           <div>
             <SidePanel
-                doctorId={doctor._id}
-                ticketPrice={ticketPrice}
-                timeSlots={timeSlots}
-              />
+              doctorId={doctor._id}
+              ticketPrice={ticketPrice}
+              timeSlots={timeSlots}
+            />
           </div>
         </div>
         {/* )} */}
