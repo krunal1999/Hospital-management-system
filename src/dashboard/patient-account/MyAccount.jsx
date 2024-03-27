@@ -1,31 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HashLoader from "react-spinners/HashLoader";
 import { useNavigate } from "react-router-dom";
-
 import Profile from "./Profile";
 import MyBookings from "./MyBookings";
-
-// import userProfile from "../../assets/images/doctor-img01.png";
-// import useGetProfile from "../../hooks/useFetchData";
-// import { AuthContext } from "../../context/AuthContext";
-// import { BASE_URL } from "./../../config";
+import { useDispatch } from "react-redux";
+import { logout } from "../../reducers/authenticationSlice";
+import patientService from "../../services/patientService";
 
 const MyAccount = () => {
-  const [tab, setTab] = useState("bookings");
-  // const {
-  //   data: userData,
-  //   loading,
-  //   error,
-  // } = useGetProfile(`${BASE_URL}/users/profile/me`);
+  const dispatch = useDispatch();
 
-  // const { dispatch } = useContext(AuthContext);
+  const [tab, setTab] = useState("bookings");
 
   let userData = JSON.parse(localStorage.getItem("user"));
   const storedStatus = localStorage.getItem("status") === "true" ? true : false;
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await patientService.getCurrentPatient(
+          userData?.loggedUser._id
+        );
+        console.log(res.data.data);
+        userData = { ...userData, loggedUser: res.data.data };
+        localStorage.setItem("user", JSON.stringify(userData));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+    return () => {};
+  });
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    dispatch(logout());
     navigate("/login");
   };
 
@@ -50,11 +61,6 @@ const MyAccount = () => {
             <div className=" px-[30px] pb-[50px] rounded-md  ">
               <div className="flex items-center justify-center">
                 <figure className="w-[100px] h-[100px] rounded-full border-2 border-solid border-[#0067FF]">
-                  {/* <img
-                    src={userData?.loggedUser.photo}
-                    alt=""
-                    className="w-full rounded-full"
-                  /> */}
                   <img
                     className="w-full rounded-full "
                     src={
@@ -81,6 +87,18 @@ const MyAccount = () => {
                     {userData?.loggedUser.bloodType}
                   </span>
                 </p>
+                <p className="text-textColor text-[15px] leading-6 font-medium">
+                  Age:
+                  <span className="ml-2 text-headingColor text-[22px] leading-8">
+                    {userData?.loggedUser.age}
+                  </span>
+                </p>
+                <p className="text-textColor text-[15px] leading-6 font-medium">
+                  Gender:
+                  <span className="ml-2 text-headingColor text-[22px] leading-8">
+                    {userData?.loggedUser.gender}
+                  </span>
+                </p>
               </div>
 
               <div className="mt-[50px] md:mt-[100px]">
@@ -90,7 +108,10 @@ const MyAccount = () => {
                 >
                   Logout
                 </button>
-                <button className="w-full bg-red-600 mt-4 p-3 rounded-md text-white text-[16px] leading-7">
+                <button
+                  disabled
+                  className="w-full bg-red-600 mt-4 p-3 rounded-md text-white text-[16px] leading-7 disabled:opacity-50 disabled:cursor-not-allowed hover:disabled:cursor-not-allowed"
+                >
                   Delete Account
                 </button>
               </div>

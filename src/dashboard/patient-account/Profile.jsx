@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-// import { BASE_URL, token } from "../../config";
 import uploadImageToCloudinary from "../../utils/uploadCloudinary.js";
-
 import { toast } from "react-toastify";
+import patientService from "../../services/patientService.js";
 
 const Profile = ({ userData }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -11,19 +10,26 @@ const Profile = ({ userData }) => {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
-    password: "",
+    // password: "",
     gender: "",
     bloodType: "",
     photo: null,
+    phone: "",
+    address: "",
+    age: "",
   });
 
   useEffect(() => {
     setFormData({
       fullName: userData.fullName,
       email: userData.email,
+      // password: userData?.password ? userData?.password : "",
       bloodType: userData?.loggedUser.bloodType,
       gender: userData?.loggedUser.gender,
       photo: userData?.loggedUser.photo,
+      phone: userData?.loggedUser.phone,
+      address: userData?.loggedUser.address,
+      age: userData?.loggedUser.age,
     });
   }, [userData]);
 
@@ -39,34 +45,29 @@ const Profile = ({ userData }) => {
     setFormData({ ...formData, photo: data.url });
   };
 
-  // const updateUserHandler = async e => {
-  //   e.preventDefault();
+  const updateUserHandler = async (e) => {
+    e.preventDefault();
 
-  //   try {
-  //     const res = await fetch(`${BASE_URL}/users/${userData._id}`, {
-  //       method: "put",
-  //       headers: {
-  //         "content-type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
+    try {
+      const id = userData?.loggedUser._id;
 
-  //       body: JSON.stringify(formData),
-  //     });
+      const res = await patientService.updatePatientProfile(id, formData);
 
-  //     const result = await res.json();
-  //     if (!res.ok) {
-  //       return toast.error(result.message);
-  //     }
-
-  //     toast.success("successfully update");
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+      if (res.status === 200) {
+        toast.success("Profile data Updated");
+        
+      } else {
+        toast.error("Profile data Not Updated");
+      }
+    } catch (error) {
+      toast.error(error);
+      console.log(error);
+    }
+  };
 
   return (
     <div>
-      <form>
+      <form onSubmit={updateUserHandler}>
         <div className="mb-5">
           <input
             type="text"
@@ -92,13 +93,46 @@ const Profile = ({ userData }) => {
           />
         </div>
 
-        <div className="mb-5">
+        {/* <div className="mb-5">
           <input
             type="password"
             value={formData.password}
             onChange={handleInputChange}
             name="password"
             placeholder="Password"
+            className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-[#0067FF] text-[16px] leading-7 text-headingColor placeholder:text-textColor"
+          />
+        </div> */}
+
+        <div className="mb-5">
+          <input
+            type="number"
+            value={formData.phone}
+            onChange={handleInputChange}
+            name="phone"
+            placeholder="phone number"
+            className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-[#0067FF] text-[16px] leading-7 text-headingColor placeholder:text-textColor"
+          />
+        </div>
+
+        <div className="mb-5">
+          <input
+            type="string"
+            value={formData.address}
+            onChange={handleInputChange}
+            name="address"
+            placeholder="Address"
+            className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-[#0067FF] text-[16px] leading-7 text-headingColor placeholder:text-textColor"
+          />
+        </div>
+
+        <div className="mb-5">
+          <input
+            type="number"
+            value={formData.age}
+            onChange={handleInputChange}
+            name="age"
+            placeholder="Age"
             className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-[#0067FF] text-[16px] leading-7 text-headingColor placeholder:text-textColor"
           />
         </div>
@@ -156,7 +190,7 @@ const Profile = ({ userData }) => {
               className="custom-file-label absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer"
               htmlFor="customFile"
             >
-              {selectedFile ? selectedFile.name : "Upload Photo"}
+              {selectedFile ? "Photo Selected" : "Upload Photo"}
             </label>
           </div>
         </div>
