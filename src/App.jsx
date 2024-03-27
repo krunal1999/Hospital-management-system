@@ -23,6 +23,7 @@ import ProtectedRoute from "./layout/ProtectedRoute.jsx";
 import Demo from "./pages/doctor/Demo.jsx";
 import FaqItem from "./pages/public/FaqItem.jsx";
 import Dashboard from "./dashboard/Doctor-Account/Dashboard.jsx";
+import MyAccount from "./dashboard/patient-account/MyAccount.jsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -34,18 +35,19 @@ function App() {
           <Route path="login" element={<LoginPage />} />
           <Route path="home" element={<Home />} />
           {/* <Route path="demo" element={<Demo />} /> */}
-          
           <Route path="finddoctors" element={<Doctors />} />
           {/* <Route path="doctor/:id" element={<Home />} /> */}
           <Route path="services" element={<Services />} />
           <Route path="contact" element={<Contact />} />
-          // protected routes
+
+          // patint protected routes
           <Route
             path="patient"
             element={<ProtectedRoute allowedRoles={["patient"]} />}
           >
-            <Route path="profile" element={<Demo />} />
+            <Route path="profile" element={<MyAccount />} />
           </Route>
+          // doctor protected Route
           <Route
             path="doctor"
             element={<ProtectedRoute allowedRoles={["doctor"]} />}

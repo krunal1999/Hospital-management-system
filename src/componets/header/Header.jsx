@@ -102,21 +102,27 @@ const Header = () => {
                   }`}
                 >
                   <figure className="w-[35px] h-[35px] rounded-full cursor-pointer ">
-                    {/* <img
-                      className="w-full rounded-full"
-                      src="https://png.pngtree.com/png-clipart/20220911/original/pngtree-male-doctor-avatar-icon-illustration-png-image_8537702.png"
-                      alt=""
-                    /> */}
-                    <img
-                      className="w-full rounded-full"
-                      src={
-                        user?.loggedUser.photo
-                          ? user?.loggedUser.photo
-                          : "https://png.pngtree.com/png-clipart/20220911/original/pngtree-male-doctor-avatar-icon-illustration-png-image_8537702.png"
-                      }
-                      alt="Profile Photo"
-                    />
-                    
+                    {role === "doctor" ? (
+                      <img
+                        className="w-full rounded-full"
+                        src={
+                          user?.loggedUser.photo
+                            ? user?.loggedUser.photo
+                            : "https://png.pngtree.com/png-clipart/20220911/original/pngtree-male-doctor-avatar-icon-illustration-png-image_8537702.png"
+                        }
+                        alt="Profile Photo"
+                      />
+                    ) : (
+                      <img
+                        className="w-full rounded-full"
+                        src={
+                          user?.loggedUser.photo
+                            ? user?.loggedUser.photo
+                            : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+                        }
+                        alt="Profile Photo"
+                      />
+                    )}
                   </figure>
                 </Link>
               </div>
