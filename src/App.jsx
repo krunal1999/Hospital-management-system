@@ -24,6 +24,7 @@ import Demo from "./pages/doctor/Demo.jsx";
 import FaqItem from "./pages/public/FaqItem.jsx";
 import Dashboard from "./dashboard/Doctor-Account/Dashboard.jsx";
 import MyAccount from "./dashboard/patient-account/MyAccount.jsx";
+import DoctorDetails from "./pages/public/DoctorDetails.jsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -36,7 +37,8 @@ function App() {
           <Route path="home" element={<Home />} />
           {/* <Route path="demo" element={<Demo />} /> */}
           <Route path="finddoctors" element={<Doctors />} />
-          {/* <Route path="doctor/:id" element={<Home />} /> */}
+          {/* <Route path="doctor/:id" element={<DoctorDetails />} /> */}
+
           <Route path="services" element={<Services />} />
           <Route path="contact" element={<Contact />} />
 

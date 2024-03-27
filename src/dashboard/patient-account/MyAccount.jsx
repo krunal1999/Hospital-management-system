@@ -48,13 +48,6 @@ const MyAccount = () => {
             <HashLoader color="#0067FF" />
           </div>
         )}
-        {/* {error && !loading && (
-          <div className="flex items-center justify-center w-full h-full">
-            <h3 className="text-headingColor text-[20px] font-semibold leading-[30px]">
-              {error}
-            </h3>
-          </div>
-        )} */}
 
         {storedStatus && (
           <div className="grid md:grid-cols-3 gap-10 ">

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import HashLoader from "react-spinners/HashLoader";
+import Testimonial from "../public/Testimonial";
+import doctoreService from "../../services/DoctorService";
 
 import DoctorCard from "../public/DoctorCard";
-import Testimonial from "../public/Testimonial";
-import HashLoader from "react-spinners/HashLoader";
-
 // import { BASE_URL } from "../../config";
 // import useFetchData from "../../hooks/useFetchData";
 
@@ -11,25 +11,64 @@ const Doctors = () => {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
 
-  // const {
-  //   data: doctors,
-  //   loading,
-  //   error,
-  // } = useFetchData(`${BASE_URL}/doctors?query=${debouncedQuery}`);
+
+  // let doctorsQueryData;
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await doctoreService.getAllDoctor(debouncedQuery);
+  //       console.log(res.data.data);
+  //       doctorsQueryData = res.data.data
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchData();
+  //   return () => {};
+  // },[]);
+
+  // const handleSearch = () => {
+  //   setQuery(query.trim());
+  // };
+
+  // useEffect(() => {
+  //   // Debounce the query value after 500ms of inactivity
+  //   const timeoutId = setTimeout(() => {
+  //     setDebouncedQuery(query);
+  //   }, 700);
+
+  //   // Clean up the timeout
+  //   return () => clearTimeout(timeoutId);
+  // }, [query]);
+
+  const [doctorsQueryData, setDoctorsQueryData] = useState([]);
+  console.log(doctorsQueryData);
+  const fetchData = useCallback(async (query) => {
+    try {
+      const res = await doctoreService.getAllDoctor(query);
+      setDoctorsQueryData(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   const handleSearch = () => {
     setQuery(query.trim());
   };
 
   useEffect(() => {
-    // Debounce the query value after 500ms of inactivity
-    const timeoutId = setTimeout(() => {
-      setDebouncedQuery(query);
+    const delayDebounceFn = setTimeout(() => {
+      if (query) {
+        setDebouncedQuery(query);
+        fetchData(query);
+      } else {
+        setDebouncedQuery("");
+        fetchData("");
+      }
     }, 700);
 
-    // Clean up the timeout
-    return () => clearTimeout(timeoutId);
-  }, [query]);
+    return () => clearTimeout(delayDebounceFn);
+  }, [query, fetchData]);
 
   return (
     <>
@@ -54,9 +93,9 @@ const Doctors = () => {
         </div>
       </section>
 
-      {/* <section>
+      <section>
         <div className="container">
-          {loading && (
+          {/* {loading && (
             <div className="flex items-center justify-center w-full h-full">
               <HashLoader color="#0067FF" />
             </div>
@@ -68,17 +107,17 @@ const Doctors = () => {
                 {error}
               </h3>
             </div>
-          )}
+          )} */}
 
-          {!loading && !error && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-              {doctors?.map((doctor) => (
-                <DoctorCard doctor={doctor} key={doctor.id} />
+          {/* {!loading && !error && ( */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+              {doctorsQueryData?.map((doctor) => (
+                <DoctorCard doctor={doctor} key={doctor._id} />
               ))}
             </div>
-          )}
+          {/* )} */}
         </div>
-      </section> */}
+      </section>
 
       <section>
         <div className="container">

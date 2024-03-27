@@ -26,7 +26,7 @@ const Profile = ({ doctorData }) => {
 
   useEffect(() => {
     setFormData({
-      name: doctorData?.fullName,
+      fullName: doctorData?.fullName,
       email: doctorData?.email,
       gender: doctorData?.loggedUser.gender,
       photo: doctorData?.loggedUser.photo,
@@ -175,7 +175,7 @@ const Profile = ({ doctorData }) => {
           <input
             type="text"
             name="name"
-            value={formData.name}
+            value={formData.fullName}
             onChange={handleInputChange}
             placeholder="Full Name"
             className="form__input"

@@ -5,12 +5,16 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
- class DoctorService {
+class DoctorService {
   updateDoctorProfile(id, data) {
     return axiosInstance.put(`${config.serverUrl}/doctor/profile/${id}`, data);
   }
-  getCurrentDoctor(id){
+  getCurrentDoctor(id) {
     return axiosInstance.get(`${config.serverUrl}/doctor/profile/me/${id}`);
+  }
+
+  getAllDoctor(query) {
+    return axiosInstance.get(`${config.serverUrl}/doctor?query=${query}`);
   }
 }
 
