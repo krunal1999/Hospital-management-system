@@ -12,6 +12,10 @@ class DoctorService {
   getCurrentDoctor(id) {
     return axiosInstance.get(`${config.serverUrl}/doctor/profile/me/${id}`);
   }
+  
+  getDoctorById(id) {
+    return axiosInstance.get(`${config.serverUrl}/doctor/${id}`);
+  }
 
   getAllDoctor(query) {
     return axiosInstance.get(`${config.serverUrl}/doctor?query=${query}`);
