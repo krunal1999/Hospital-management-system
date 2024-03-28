@@ -135,7 +135,12 @@ const Profile = ({ doctorData }) => {
 
   const addTimeSlot = (e) => {
     e.preventDefault();
-    addItem("timeSlots", { day: "", startingTime: null, endingTime: null });
+    addItem("timeSlots", {
+      day: "",
+      startingTime: null,
+      endingTime: null,
+      breakstartingTime: null,
+    });
   };
 
   const handleTimeSlotChange = (event, index) => {
@@ -463,8 +468,8 @@ const Profile = ({ doctorData }) => {
                   <p className="form__label">Break Time [1hr]*</p>
                   <input
                     type="time"
-                    name="startingTime"
-                    value={item.startingTime}
+                    name="breakstartingTime"
+                    value={item.breakstartingTime}
                     className="form__input"
                     onChange={(e) => handleTimeSlotChange(e, index)}
                     step={3600}
