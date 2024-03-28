@@ -20,6 +20,9 @@ class DoctorService {
   getAllDoctor(query) {
     return axiosInstance.get(`${config.serverUrl}/doctor?query=${query}`);
   }
+
+ 
+
 }
 
 const doctoreService = new DoctorService();

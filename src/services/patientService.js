@@ -13,6 +13,12 @@ class PatientService {
   getCurrentPatient(id) {
     return axiosInstance.get(`${config.serverUrl}/patient/profile/me/${id}`);
   }
+
+  getPatientAppointments(id) {
+    return axiosInstance.get(
+      `${config.serverUrl}/patient/profile/appointment/${id}`
+    );
+  }
 }
 
 const patientService = new PatientService();

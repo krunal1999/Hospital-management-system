@@ -7,7 +7,7 @@ import { BsArrowRight } from "react-icons/bs";
 const DoctorCard = ({ doctor }) => {
   const {
     fullName,
-    averageRating,
+    avgRating,
     totalRating,
     // totalPatients,
     specialization,
@@ -31,7 +31,7 @@ const DoctorCard = ({ doctor }) => {
 
         <div className="flex items-center gap-[6px]">
           <span className="flex items-center gap-[6px] text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-[600] text-headingColor">
-            <img src={starIcon} alt="" /> {averageRating}
+            <img src={starIcon} alt="" /> {avgRating}
           </span>
           <span className="text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-[400] text-textColor">
             ({totalRating})
