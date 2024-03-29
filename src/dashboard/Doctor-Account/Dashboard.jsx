@@ -6,6 +6,7 @@ import Profile from "./Profile";
 import DoctorAbout from "../../pages/doctor/DoctorAbout";
 import Appointments from "./Appointments";
 import doctoreService from "../../services/DoctorService";
+import PatientDetails from "./PatientDetails";
 
 // import doctorImg from "../../assets/images/doctor-img02.png";
 // import { BASE_URL } from "../../config";
@@ -13,11 +14,7 @@ import doctoreService from "../../services/DoctorService";
 
 const Dashboard = () => {
   const [tab, setTab] = useState("overview");
-  // const {
-  //   data: doctorData,
-  //   loading,
-  //   error,
-  // } = useGetProfile(`${BASE_URL}/doctors/profile/me`);
+  const [patientData, setPatientData] = useState(null);
 
   let doctorData = JSON.parse(localStorage.getItem("user"));
   const storedStatus = localStorage.getItem("status") === "true" ? true : false;
@@ -37,7 +34,7 @@ const Dashboard = () => {
     };
     fetchData();
     return () => {};
-  });
+  }, [doctorData?.loggedUser._id]);
 
   return (
     <section>
@@ -47,15 +44,12 @@ const Dashboard = () => {
             <HashLoader color="#0067FF" />
           </div>
         )}
-        {/* {error && (
-          <div>
-            <h3>{error.message}</h3>
-          </div>
-        )} */}
+
         {/* {!loading && !error && ( */}
         {true && (
           <div className="grid lg:grid-cols-3 gap-[30px] lg:gap-[50px] ">
             <Tabs tab={tab} setTab={setTab} />
+
             <div className="lg:col-span-2">
               {/* // add pending here */}
               {doctorData?.loggedUser.isApproved === "pending" && (
@@ -141,8 +135,19 @@ const Dashboard = () => {
                 )}
                 {tab === "settings" && <Profile doctorData={doctorData} />}
                 {tab === "appointments" && (
+                  // <Appointments
+                  //   appointments={doctorData?.loggedUser.appointments}
+                  // />
                   <Appointments
-                    appointments={doctorData?.loggedUser.appointments}
+                    setTab={setTab}
+                    setPatientData={setPatientData}
+                  />
+                )}
+                {tab === "patient" && (
+                  <PatientDetails
+                    patientData={patientData}
+                    doctorData={doctorData?.loggedUser}
+                    setTab={setTab}
                   />
                 )}
               </div>

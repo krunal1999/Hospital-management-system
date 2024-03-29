@@ -12,7 +12,7 @@ class DoctorService {
   getCurrentDoctor(id) {
     return axiosInstance.get(`${config.serverUrl}/doctor/profile/me/${id}`);
   }
-  
+
   getDoctorById(id) {
     return axiosInstance.get(`${config.serverUrl}/doctor/${id}`);
   }
@@ -21,8 +21,18 @@ class DoctorService {
     return axiosInstance.get(`${config.serverUrl}/doctor?query=${query}`);
   }
 
- 
+  getDoctortAppointments(id) {
+    return axiosInstance.get(
+      `${config.serverUrl}/doctor/profile/appointment/${id}`
+    );
+  }
 
+  givePrescription(data) {
+    return axiosInstance.post(
+      `${config.serverUrl}/doctor/profile/prescription`,
+      data
+    );
+  }
 }
 
 const doctoreService = new DoctorService();
