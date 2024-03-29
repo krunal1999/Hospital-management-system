@@ -10,6 +10,12 @@ class PatientService {
     return axiosInstance.put(`${config.serverUrl}/patient/profile/${id}`, data);
   }
 
+  updateBooking(id) {
+    return axiosInstance.put(
+      `${config.serverUrl}/patient/profile/booking/${id}`
+    );
+  }
+
   getCurrentPatient(id) {
     return axiosInstance.get(`${config.serverUrl}/patient/profile/me/${id}`);
   }
@@ -17,6 +23,12 @@ class PatientService {
   getPatientAppointments(id) {
     return axiosInstance.get(
       `${config.serverUrl}/patient/profile/appointment/${id}`
+    );
+  }
+
+  getPatientCompletedAppointments(id) {
+    return axiosInstance.get(
+      `${config.serverUrl}/patient/profile/completeappointment/${id}`
     );
   }
 }

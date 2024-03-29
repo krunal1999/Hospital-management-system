@@ -25,6 +25,7 @@ import FaqItem from "./pages/public/FaqItem.jsx";
 import Dashboard from "./dashboard/Doctor-Account/Dashboard.jsx";
 import MyAccount from "./dashboard/patient-account/MyAccount.jsx";
 import DoctorDetails from "./pages/public/DoctorDetails.jsx";
+import CheckoutSuccess from "./pages/public/CheckoutSuccess.jsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -32,16 +33,16 @@ function App() {
       <>
         <Route path="/" element={<Layout />}>
           // public routes
+          <Route path="success/:id" element={<CheckoutSuccess />} />
+          <Route path="cancel" element={<RegisterPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="home" element={<Home />} />
           <Route path="demo" element={<Demo />} />
           <Route path="finddoctors" element={<Doctors />} />
           <Route path="doctors/:id" element={<DoctorDetails />} />
-
           <Route path="services" element={<Services />} />
           <Route path="contact" element={<Contact />} />
-
           // patint protected routes
           <Route
             path="patient"

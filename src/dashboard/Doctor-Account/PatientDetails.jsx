@@ -61,6 +61,7 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
       patientId: patientData?.patientId._id,
       visitedDate: new Date(),
       bookingId: patientData?._id,
+      paidStatus: "unpaid"
     };
     const res = await doctoreService.givePrescription(prescriptionData);
 

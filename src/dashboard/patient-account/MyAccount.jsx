@@ -6,6 +6,7 @@ import MyBookings from "./MyBookings";
 import { useDispatch } from "react-redux";
 import { logout } from "../../reducers/authenticationSlice";
 import patientService from "../../services/patientService";
+import MyCompletedBooking from "./MyCompletedBooking";
 
 const MyAccount = () => {
   const dispatch = useDispatch();
@@ -121,6 +122,15 @@ const MyAccount = () => {
                   My Bookings
                 </button>
                 <button
+                  onClick={() => setTab("completebookings")}
+                  className={`${
+                    tab === "completebookings" &&
+                    "bg-[#0067FF] text-white font-normal"
+                  }  p-2 mr-5 px-5 rounded-md text-headingColor font-semibold text-[16px] leading-7  border border-solid border-[#0067FF]`}
+                >
+                  Completed Bookings
+                </button>
+                <button
                   onClick={() => setTab("settings")}
                   className={`${
                     tab === "settings" && "bg-[#0067FF] text-white font-normal"
@@ -137,6 +147,14 @@ const MyAccount = () => {
                     <MyBookings />
                   </div>
                 )}
+
+                {tab === "completebookings" && (
+                  <div>
+                    <h2 className="heading text-[30px]">My bookings</h2>
+                    <MyCompletedBooking />
+                  </div>
+                )}
+
                 {tab === "settings" && (
                   <div>
                     <h2 className="heading text-[30px]">Profile Settings</h2>
