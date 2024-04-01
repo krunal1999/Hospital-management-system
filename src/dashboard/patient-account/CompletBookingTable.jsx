@@ -8,6 +8,7 @@ const CompletBookingTable = ({ booking }) => {
     visitedDate,
     totalCost,
     paidStatus,
+    delivered,
     bookingId: { date },
   } = booking;
 
@@ -36,14 +37,12 @@ const CompletBookingTable = ({ booking }) => {
     const session = await response.json();
 
     const result = stripe.redirectToCheckout({
-        sessionId:session.id
-    })
+      sessionId: session.id,
+    });
 
-    if(result.error){
-        console.log(result.error)
+    if (result.error) {
+      console.log(result.error);
     }
-
-
   };
 
   return (
@@ -65,13 +64,22 @@ const CompletBookingTable = ({ booking }) => {
           </span>
         </td>
         <td className="py-2 px-2">
-          <button
-            onClick={() => handleClick(booking)}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            disabled={paidStatus === "Paid"}
-          >
-            Pay Now
-          </button>
+          {paidStatus !== "Paid" ? (
+            <button
+              onClick={() => handleClick(booking)}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              disabled={paidStatus === "Paid"}
+            >
+              Pay Now
+            </button>
+          ) : (
+            <button
+              className="bg-green-500 text-white font-bold py-1 px-1 rounded"
+              disabled={paidStatus === "Paid"}
+            >
+              {delivered ? "Order Delievered" : "Order Pending"}
+            </button>
+          )}
         </td>
       </tr>
     </tbody>

@@ -34,6 +34,18 @@ class DoctorService {
     );
   }
 
+  getAllPrescription() {
+    return axiosInstance.get(
+      `${config.serverUrl}/doctor/profile/getallprescription`
+    );
+  }
+
+  updatePrescriptionById(id) {
+    return axiosInstance.put(
+      `${config.serverUrl}/doctor/profile/updateprescriptionbyid/${id}`
+    );
+  }
+
   getAllDoctor() {
     return axiosInstance.get(`${config.serverUrl}/doctor/`);
   }

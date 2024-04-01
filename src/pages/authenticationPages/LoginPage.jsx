@@ -58,20 +58,28 @@ function LoginPage() {
         .then((response) => {
           if (response.status === 200) {
             let res = response.data.data;
-            // const cookieValue = document.cookie.split("=")[1];
-            // console.log("Cookie Value:", cookieValue);
 
-            dispatch(login(res));
             reset();
-            toast.success("User Login Success");
 
-            console.log(res.role);
+            console.log(res.loggedUser.isBlocked);
             if (res.role === "doctor") {
+              dispatch(login(res));
               navigate("/doctor/profile");
+              toast.success("User Login Success");
             } else if (res.role === "patient") {
-              navigate("/patient/profile");
+              if (res.loggedUser.isBlocked) {
+                toast.error("User Has Been Blocked");
+                dispatch(logout());
+                navigate("/login");
+              } else {
+                dispatch(login(res));
+                navigate("/patient/profile");
+                toast.success("User Login Success");
+              }
             } else {
+              dispatch(login(res));
               navigate("/admin/profile");
+              toast.success("User Login Success");
             }
           }
         })

@@ -79,6 +79,7 @@ const Appointments = ({ setTab , setPatientData }) => {
                   </div>
                 </div>
               </th>
+              
               <td className="px-2 py-4">{item.patientId?.gender}</td>
 
               <td className="px-2 py-4">

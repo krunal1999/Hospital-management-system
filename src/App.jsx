@@ -27,6 +27,7 @@ import MyAccount from "./dashboard/patient-account/MyAccount.jsx";
 import DoctorDetails from "./pages/public/DoctorDetails.jsx";
 import CheckoutSuccess from "./pages/public/CheckoutSuccess.jsx";
 import AdminDashboard from "./dashboard/Admin-Account/AdminDashboard.jsx";
+import PatientProfile from "./pages/patient/PatientProfile.jsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -44,6 +45,9 @@ function App() {
           <Route path="doctors/:id" element={<DoctorDetails />} />
           <Route path="services" element={<Services />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="patient/:id" element={<PatientProfile />} />
+
+
           // patint protected routes
           <Route
             path="patient"

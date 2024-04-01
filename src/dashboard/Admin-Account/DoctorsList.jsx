@@ -3,13 +3,6 @@ import React, { useState, useEffect } from 'react';
 const DoctorsList = () => {
   const [doctors, setDoctors] = useState([]);
 
-//   useEffect(() => {
-//     // Fetch doctors data from the backend API
-//     fetch('/api/doctors')
-//       .then(response => response.json())
-//       .then(data => setDoctors(data))
-//       .catch(error => console.error('Error fetching doctors:', error));
-//   }, []);
 
   return (
     <div className="container mx-auto py-8">

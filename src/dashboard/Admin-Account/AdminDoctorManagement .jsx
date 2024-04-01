@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import DoctorList from "./DoctorList ";
 import doctoreService from "../../services/DoctorService";
 import DateInputForm from "./DateInputForm";
+import DoctorList from "./DoctorList";
 
 const AdminDoctorManagement = () => {
   const [activeTab, setActiveTab] = useState("pending");

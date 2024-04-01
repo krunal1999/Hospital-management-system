@@ -48,9 +48,9 @@ const MyCompletedBooking = () => {
                     <th className="py-3 px-8">Booking Date</th>
                     <th className="py-3 px-12">Booking Status</th>
                     <th className="py-3 px-8">Visited Date</th>
-                    <th className="py-3 px-8">Payment</th>
-                    <th className="py-3 px-8">Total</th>
-                    <th className="py-3 px-8">PayNow</th>
+                    <th className="py-3 px-6">Payment</th>
+                    <th className="py-3 px-6">Bill Status</th>
+                    <th className="py-3 px-10">PayNow</th>
                   </tr>
                 </thead>
                 {appointment?.map((doctor) => (
