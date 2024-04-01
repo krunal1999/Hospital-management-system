@@ -94,12 +94,18 @@ const Header = () => {
 
           {/* ========= nav right ========== */}
           <div className="flex items-center gap-4">
-            {user !== null && status && role ? (
+            {user !== null &&
+            status &&
+            (role === "doctor" || role === "patient" || role === "admin") ? (
               <div>
                 <Link
-                  to={`${
-                    role === "doctor" ? "/doctor/profile" : "/patient/profile"
-                  }`}
+                  to={
+                    role === "doctor"
+                      ? "/doctor/profile"
+                      : role === "patient"
+                      ? "/patient/profile"
+                      : "/admin/profile"
+                  }
                 >
                   <figure className="w-[35px] h-[35px] rounded-full cursor-pointer ">
                     {role === "doctor" ? (
@@ -112,13 +118,23 @@ const Header = () => {
                         }
                         alt="Profile Photo"
                       />
-                    ) : (
+                    ) : role === "patient" ? (
                       <img
                         className="w-full rounded-full"
                         src={
                           user?.loggedUser.photo
                             ? user?.loggedUser.photo
                             : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+                        }
+                        alt="Profile Photo"
+                      />
+                    ) : (
+                      <img
+                        className="w-full rounded-full"
+                        src={
+                          user?.loggedUser.photo
+                            ? user?.loggedUser.photo
+                            : "https://cdn.pixabay.com/photo/2016/04/01/11/25/avatar-1300331_1280.png"
                         }
                         alt="Profile Photo"
                       />

@@ -33,6 +33,20 @@ class DoctorService {
       data
     );
   }
+
+  getAllDoctor() {
+    return axiosInstance.get(`${config.serverUrl}/doctor/`);
+  }
+
+  updateDoctorApprove(id) {
+    return axiosInstance.put(`${config.serverUrl}/doctor/updateapprove/${id}`);
+  }
+
+  updateDoctorAvailable(id) {
+    return axiosInstance.put(
+      `${config.serverUrl}/doctor/updateavailable/${id}`
+    );
+  }
 }
 
 const doctoreService = new DoctorService();

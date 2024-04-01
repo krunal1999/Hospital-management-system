@@ -14,7 +14,7 @@ const Appointments = ({ setTab , setPatientData }) => {
         const res = await doctoreService.getDoctortAppointments(
           userData?.loggedUser._id
         );
-        setAppointment(res.data.data);
+        setAppointment(res?.data?.data);
       } catch (error) {
         console.log(error);
       }
@@ -67,19 +67,19 @@ const Appointments = ({ setTab , setPatientData }) => {
               >
                 <img
                   className="w-10 h-10 rounded-full"
-                  src={item.patientId.photo}
+                  src={item.patientId?.photo}
                   alt="Jese image"
                 />
                 <div className="pl-3">
                   <div className="text-base font-semibold">
-                    {item.patientId.userId.fullName}
+                    {item.patientId?.userId?.fullName ? item.patientId?.userId?.fullName : ""}
                   </div>
                   <div className="font-normal text-gray-500">
                     {item.patientId.userId.email}
                   </div>
                 </div>
               </th>
-              <td className="px-2 py-4">{item.patientId.gender}</td>
+              <td className="px-2 py-4">{item.patientId?.gender}</td>
 
               <td className="px-2 py-4">
                 {item.bookingStatus && (

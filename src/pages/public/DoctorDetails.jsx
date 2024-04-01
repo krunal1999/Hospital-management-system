@@ -19,7 +19,6 @@ const DoctorDetails = () => {
       try {
         const fetchedData = await doctoreService.getDoctorById(id);
         const getReview = await reviewService.getAllReview();
-        console.log(getReview.data.data);
 
         setDoctor(fetchedData.data.data);
       } catch (error) {
@@ -143,6 +142,7 @@ const DoctorDetails = () => {
               doctorId={doctor._id}
               ticketPrice={ticketPrice}
               timeSlots={timeSlots}
+              doctorInfo = {doctor}
             />
           </div>
         </div>

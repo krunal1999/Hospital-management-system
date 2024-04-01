@@ -6,6 +6,19 @@ const axiosInstance = axios.create({
 });
 
 class BookingService {
+  generateSlots(data) {
+    return axiosInstance.post(
+      `${config.serverUrl}/booking/pre-generate-slots`,
+      data
+    );
+  }
+
+  deleteSlots(data) {
+    return axiosInstance.delete(`${config.serverUrl}/booking/delete-slots`, {
+      params: data, 
+    });
+  }
+
   getAvailbleBookingByDrID(id) {
     return axiosInstance.get(`${config.serverUrl}/booking/getslots/${id}`);
   }

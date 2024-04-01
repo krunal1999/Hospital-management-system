@@ -26,6 +26,7 @@ import Dashboard from "./dashboard/Doctor-Account/Dashboard.jsx";
 import MyAccount from "./dashboard/patient-account/MyAccount.jsx";
 import DoctorDetails from "./pages/public/DoctorDetails.jsx";
 import CheckoutSuccess from "./pages/public/CheckoutSuccess.jsx";
+import AdminDashboard from "./dashboard/Admin-Account/AdminDashboard.jsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -56,6 +57,13 @@ function App() {
             element={<ProtectedRoute allowedRoles={["doctor"]} />}
           >
             <Route path="profile" element={<Dashboard />} />
+          </Route>
+          // Admin protected Route
+          <Route
+            path="admin"
+            element={<ProtectedRoute allowedRoles={["admin"]} />}
+          >
+            <Route path="profile" element={<AdminDashboard />} />
           </Route>
         </Route>
       </>

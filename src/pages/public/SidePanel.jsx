@@ -5,10 +5,14 @@ import bookingService from "../../services/BookingService.js";
 import convertTime from "../../utils/convertTime.js";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import doctoreService from "./../../services/DoctorService";
 
-const SidePanel = ({ ticketPrice, timeSlots, doctorId }) => {
+const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
   const storedStatus = localStorage.getItem("status") === "true" ? true : false;
   let userData = JSON.parse(localStorage.getItem("user"));
+
+  console.log(doctorInfo.isApproved);
+  console.log(doctorInfo.isAllowed);
 
   const [bookings, setBookings] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState(null);
@@ -43,7 +47,8 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId }) => {
       selectedBooking._id,
       bookingData
     );
-    console.log(res.data);
+    // console.log(res.data);
+
     if (res.status === 200) {
       setLoading(false);
       toast.success(res.data.message);
@@ -60,10 +65,44 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId }) => {
     setSelectedBooking(booking);
   };
 
+  const approvehandler = async () => {
+    try {
+      setLoading(true);
+      const res = await doctoreService.updateDoctorApprove(doctorId);
+      if (res.status === 200) {
+        setLoading(false);
+        navigate("/admin/profile");
+        toast.success("Doctor Has Been Approved");
+      } else {
+        setLoading(false);
+        toast.error("Failed To Update Doctor");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const bookingAvailablehandler = async () => {
+    try {
+      setLoading(true);
+      const res = await doctoreService.updateDoctorAvailable(doctorId);
+      if (res.status === 200) {
+        setLoading(false);
+        navigate("/admin/profile");
+        toast.success("Doctor Has Been Approved");
+      } else {
+        setLoading(false);
+        toast.error("Failed To Update Doctor");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className=" shadow-panelShadow p-3 lg:p-5 rounded-md">
       <div className="flex items-center justify-between">
-        <p className="text__para mt-0 font-semibold">Minimum Ticket Price</p>
+        <p className="text__para mt-0 font-semibold">Minimum Fees Price</p>
         <span className="text-[16px] leading-7 lg:text-[22px] lg:leading-8 text-headingColor font-bold">
           {ticketPrice} £
         </span>
@@ -101,11 +140,12 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId }) => {
               onChange={handleBookingSelect}
             >
               <option value="">Select a booking</option>
-              {bookings.map((booking) => (
-                <option key={booking._id} value={booking._id}>
-                  {`${booking.date} - ${booking.startTime} - ${booking.endTime}`}
-                </option>
-              ))}
+              {bookings.length > 0 &&
+                bookings.map((booking) => (
+                  <option key={booking._id} value={booking._id}>
+                    {`${booking.date} - ${booking.startTime} - ${booking.endTime}`}
+                  </option>
+                ))}
             </select>
 
             {selectedBooking && (
@@ -119,14 +159,53 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId }) => {
           </div>
         )}
       </div>
-      {!loading ? (
+
+      {!loading && userData.role === "patient" ? (
         <button onClick={bookingHandler} className="px-2 btn w-full rounded-md">
           {storedStatus ? "Book Appointment" : "Login To Book Appointment"}
         </button>
       ) : (
-        <button onClick={bookingHandler} className="px-2 btn w-full rounded-md">
-          {"loading...."}
-        </button>
+        <>
+          {!loading ? (
+            <>
+              {doctorInfo.isApproved === "pending" ? (
+                <button
+                  onClick={approvehandler}
+                  className="px-2 btn w-full rounded-md bg-yellow-600"
+                >
+                  Click To Approve
+                </button>
+              ) : (
+                <button
+                  disabled
+                  className="px-2 btn w-full rounded-md bg-green-600"
+                >
+                  Approved
+                </button>
+              )}
+
+              {doctorInfo.isAllowed ? (
+                <button
+                  onClick={bookingAvailablehandler}
+                  className="px-2 btn w-full rounded-md bg-green-600"
+                >
+                  Doctor Available
+                </button>
+              ) : (
+                <button
+                  onClick={bookingAvailablehandler}
+                  className="px-2 btn w-full rounded-md bg-red-600"
+                >
+                  Doctor Not Available
+                </button>
+              )}
+            </>
+          ) : (
+            <button disabled className="px-2 btn w-full rounded-md">
+              {"loading...."}
+            </button>
+          )}
+        </>
       )}
     </div>
   );

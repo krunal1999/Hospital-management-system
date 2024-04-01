@@ -68,8 +68,10 @@ function LoginPage() {
             console.log(res.role);
             if (res.role === "doctor") {
               navigate("/doctor/profile");
-            } else {
+            } else if (res.role === "patient") {
               navigate("/patient/profile");
+            } else {
+              navigate("/admin/profile");
             }
           }
         })
