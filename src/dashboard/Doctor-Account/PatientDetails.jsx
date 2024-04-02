@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import PatientProfile from "./PatientProfile ";
 import doctoreService from "../../services/DoctorService";
 import { useNavigate } from "react-router-dom";
+import conf from "../../config/config";
+import authenticationService from "../../services/AuthenticationService";
+import { toast } from 'react-toastify';
 
 const medicineList = [
   { name: "Paracetamol", price: 2.5 },
@@ -61,13 +64,48 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
       patientId: patientData?.patientId._id,
       visitedDate: new Date(),
       bookingId: patientData?._id,
-      paidStatus: "unpaid"
+      paidStatus: "unpaid",
     };
     const res = await doctoreService.givePrescription(prescriptionData);
+
+    if (prescriptionData.visitStatus === "Cancelled") {
+      sendBookingMail(patientData.patientId.userId.email);
+    }
 
     if (res.status === 200) {
       setTab("appointments");
     }
+  };
+
+  const sendBookingMail = async (data) => {
+    let subject = `Appointment Cancellation Notification
+    `;
+    let text = `Dear ${patientData.patientId.userId.fullName},
+
+    We regret to inform you that your appointment with ${doctorData.fullName} scheduled for ${patientData.date}  has been cancelled. We apologize for any inconvenience this may cause.
+
+    Please feel free to book another slot at your convenience. If you need assistance or have any questions, please don't hesitate to contact us.
+
+    We apologize again for any inconvenience and look forward to assisting you further.
+
+    Best regards,
+    MediCare+
+    `;
+
+    const options = {
+      from: conf.sendigFrom,
+      to: data,
+      subject: subject,
+      text: text,
+    };
+
+    const res = await authenticationService.sendMails(options);
+    if (res.status === 200) {
+      toast.success("Email Send");
+    }
+
+    // console.log(data);
+    // console.log(text);
   };
 
   return (

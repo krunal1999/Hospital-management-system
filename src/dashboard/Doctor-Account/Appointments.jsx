@@ -23,12 +23,9 @@ const Appointments = ({ setTab , setPatientData }) => {
     return () => {};
   }, [userData?.loggedUser._id]);
 
-  console.log(appointments);
+  
 
   const clickHandler = (item) => {
-    console.log("clicked");
-    
-    console.log(item._id)
     setPatientData(item)
     setTab("patient");
   };
