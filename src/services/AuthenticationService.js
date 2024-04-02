@@ -12,6 +12,9 @@ class AuthenticationService {
   loginUser(data) {
     return axiosInstance.post(`${config.serverUrl}/users/login`, data);
   }
+  sendMails(data) {
+    return axiosInstance.post(`${config.serverUrl}/users/sendmail`, data);
+  }
 }
 
 const authenticationService = new AuthenticationService();

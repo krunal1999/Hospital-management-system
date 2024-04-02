@@ -6,6 +6,8 @@ import convertTime from "../../utils/convertTime.js";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import doctoreService from "./../../services/DoctorService";
+import conf from "../../config/config.js";
+import authenticationService from "../../services/AuthenticationService.js";
 
 const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
   const storedStatus = localStorage.getItem("status") === "true" ? true : false;
@@ -47,7 +49,9 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
       selectedBooking._id,
       bookingData
     );
-    // console.log(res.data);
+
+    // console.log(res.data.data);
+    sendBookingMail(res.data.data);
 
     if (res.status === 200) {
       setLoading(false);
@@ -57,6 +61,46 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
       setLoading(false);
       toast.error(res.data.message);
     }
+  };
+
+  const sendBookingMail = async (data) => {
+    let subject = `Appointment Confirmation for ${data.date}
+    `;
+    let text = `Dear ${userData.fullName},
+
+    I hope this email finds you well. This is to confirm your appointment on ${
+      data.date
+    } from ${data.startTime} to ${data.endTime}.
+    
+    Here are the details of your appointment:
+    
+    Date: ${data.date}
+    Time: ${data.startTime} to ${data.endTime}
+    Status: ${data.bookingStatus}
+    Please note that this appointment has already been ${data.bookingStatus.toLowerCase()} and is not available for rescheduling.
+    
+    If you have any questions or need to make changes, please feel free to contact us at your earliest convenience.
+    
+    We look forward to seeing you at the appointment.
+    
+    Best regards,
+    MediCare+
+    `;
+
+    const options = {
+      from: conf.sendigFrom,
+      to: userData.email,
+      subject: subject,
+      text: text,
+    };
+
+    const res = await authenticationService.sendMails(options);
+    if (res.status === 200) {
+      toast.success("Email Send");
+    }
+
+    // console.log(subject);
+    // console.log(text);
   };
 
   const handleBookingSelect = (event) => {

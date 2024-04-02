@@ -47,7 +47,7 @@ const Tabs = ({ tab, setTab }) => {
           Patient
         </button>
 
-        <button
+        {/* <button
           onClick={() => setTab("Settings")}
           className={` ${
             tab === "Settings"
@@ -56,7 +56,7 @@ const Tabs = ({ tab, setTab }) => {
           } w-full   btn rounded-md  mt-0`}
         >
           Settings
-        </button>
+        </button> */}
 
         <div className="mt-[100px] w-full">
           <button

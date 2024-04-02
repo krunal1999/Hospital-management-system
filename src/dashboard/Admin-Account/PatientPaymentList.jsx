@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import doctoreService from "../../services/DoctorService";
 import { toast } from "react-toastify";
+import authenticationService from "../../services/AuthenticationService";
+import conf from "../../config/config";
 
-const PaitentPaymentList = ({ patient }) => {
+const PaitentPaymentList = ({ patient, setLoading }) => {
   const navigate = useNavigate();
 
   const handleClick = (item) => {
@@ -12,12 +14,84 @@ const PaitentPaymentList = ({ patient }) => {
 
   const handleSend = async (item) => {
     try {
+      setLoading(true);
       const res = await doctoreService.updatePrescriptionById(item._id);
       if (res.status === 200) {
         toast.success("Order Send");
+        console.log(res.data.data);
+        sendBookingMail(res.data.data);
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
+    }
+  };
+
+  const sendBookingMail = async (data) => {
+    const date = new Date(data.visitedDate);
+    const visitedDate = date.toLocaleString();
+
+    const medicinesString = data.medicines
+      .map(
+        (medicine) =>
+          `${medicine.name}, Quantity: ${medicine.quantity}, Price: ${medicine.price}`
+      )
+      .join("; ");
+
+    const emailTo = data.patientId.userId.email;
+
+    let subject = `Payment Received and Medicines Dispatched for ${visitedDate}
+    `;
+
+    let text = `
+Dear ${data.patientId.userId.fullName},
+
+We hope this email finds you in good health. We are writing to inform you that we have received your payment and your medicines have been dispatched.
+
+Here are the details of your visit:
+
+- Visited Date: ${visitedDate}
+- Doctor's Fee: ${data.doctorFee}
+- Medicines: 
+${medicinesString}
+
+- Total Cost: ${data.totalCost}
+- Remarks: ${data.remarks}
+
+--------------------------------------
+
+- Visit Status: ${data.visitStatus}
+- Paid Status: ${data.paidStatus}
+
+Your provided information:
+- Address: ${data.patientId.address}$
+- Phone: ${data.patientId.phone}
+
+
+We have dispatched your medicines to the provided address. If you have any further questions or concerns, please feel free to reach out to us.
+
+Thank you for choosing our services.
+
+Best regards,
+MediCare+
+
+    `;
+
+    const options = {
+      from: conf.sendigFrom,
+      to: emailTo,
+      subject: subject,
+      text: text,
+    };
+
+    try {
+      const res = await authenticationService.sendMails(options);
+      if (res.status === 200) {
+        toast.success("Email Send");
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(true);
     }
   };
 
@@ -69,12 +143,14 @@ const PaitentPaymentList = ({ patient }) => {
                       View Profile
                     </button>
                   ) : (
-                    <button
-                      onClick={() => handleSend(pt)}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                      Send Order
-                    </button>
+                     (
+                      <button
+                        onClick={() => handleSend(pt)}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      >
+                        Send Order
+                      </button>
+                    )
                   )}
                 </td>
               </tr>

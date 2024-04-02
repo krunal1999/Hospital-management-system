@@ -7,7 +7,7 @@ const PatientProfile = () => {
   const [patient, setPatient] = useState(null);
   const [block, setBlock] = useState(null);
   const [bookingDetails, setBookingDetails] = useState(null);
-
+  const [loading, setLoading] = useState(false);
   const { id } = useParams();
   console.log("idd", id);
 
@@ -18,7 +18,7 @@ const PatientProfile = () => {
 
         const bookingHistory =
           await patientService.getPatientCompletedAppointments(id);
-        // console.log(response.data.data.isBlocked);
+
         setBlock(response.data.data.isBlocked);
         setBookingDetails(bookingHistory.data.data);
         setPatient(response.data.data);
@@ -27,7 +27,7 @@ const PatientProfile = () => {
       }
     };
     fetchPatientData();
-  }, []);
+  }, [loading]);
 
   const handleBlockUnblock = async () => {
     try {
@@ -35,8 +35,10 @@ const PatientProfile = () => {
         block: !block,
       });
       setBlock(response.data.data.isBlocked);
+      setLoading((prev) => !prev);
     } catch (error) {
       console.error("Error blocking/unblocking user:", error);
+      setLoading((prev) => !prev);
     }
   };
 

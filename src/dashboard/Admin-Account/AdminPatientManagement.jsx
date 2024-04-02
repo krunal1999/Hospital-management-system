@@ -6,6 +6,7 @@ import PaitentPaymentList from "./PatientPaymentList";
 const AdminPatientManagement = () => {
   const [activeTab, setActiveTab] = useState("pending");
   const [patients, setPatients] = useState({ paid: [], unpaid: [] });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +21,7 @@ const AdminPatientManagement = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [loading]);
 
   console.log(patients)
 
@@ -64,13 +65,13 @@ const AdminPatientManagement = () => {
         {activeTab === "pending" && (
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-bold mb-4">pending List</h2>
-            <PaitentPaymentList patient={patients.unpaid} />
+            <PaitentPaymentList patient={patients.unpaid} setLoading={setLoading} />
           </div>
         )}
         {activeTab === "patient" && (
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-bold mb-4">patient List</h2>
-            <PaitentPaymentList patient={patients.paid} />
+            <PaitentPaymentList patient={patients.paid} setLoading={setLoading} />
           </div>
         )}
         {activeTab === "allpatient" && (

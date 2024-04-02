@@ -65,17 +65,22 @@ const CompletBookingTable = ({ booking }) => {
         </td>
         <td className="py-2 px-2">
           {paidStatus !== "Paid" ? (
+            
             <button
               onClick={() => handleClick(booking)}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              disabled={paidStatus === "Paid"}
+              className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+                paidStatus === "Paid" || visitStatus === "Cancelled"
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
+              disabled={paidStatus === "Paid" || visitStatus === "Cancelled"}
             >
               Pay Now
             </button>
           ) : (
             <button
               className="bg-green-500 text-white font-bold py-1 px-1 rounded"
-              disabled={paidStatus === "Paid"}
+              disabled={paidStatus === "Paid" || visitStatus === "Cancelled"}
             >
               {delivered ? "Order Delievered" : "Order Pending"}
             </button>
