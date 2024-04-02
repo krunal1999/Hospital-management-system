@@ -4,7 +4,7 @@ import doctoreService from "../../services/DoctorService";
 import { useNavigate } from "react-router-dom";
 import conf from "../../config/config";
 import authenticationService from "../../services/AuthenticationService";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const medicineList = [
   { name: "Paracetamol", price: 2.5 },
@@ -103,9 +103,6 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
     if (res.status === 200) {
       toast.success("Email Send");
     }
-
-    // console.log(data);
-    // console.log(text);
   };
 
   return (
