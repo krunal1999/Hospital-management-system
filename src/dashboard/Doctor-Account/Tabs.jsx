@@ -58,6 +58,28 @@ const Tabs = ({ tab, setTab }) => {
           Profile
         </button>
 
+        <button
+          onClick={() => setTab("BookingHistory")}
+          className={` ${
+            tab === "BookingHistory"
+              ? "bg-indigo-100 text-[#0067FF]"
+              : "bg-transparent text-headingColor"
+          } w-full   btn rounded-md  mt-0`}
+        >
+          Booking History
+        </button>
+
+        <button
+          onClick={() => setTab("ManageAvailability")}
+          className={` ${
+            tab === "ManageAvailability"
+              ? "bg-indigo-100 text-[#0067FF]"
+              : "bg-transparent text-headingColor"
+          } w-full   btn rounded-md  mt-0`}
+        >
+          Manage Availability
+        </button>
+
         <div className="mt-[100px] w-full">
           <button
             onClick={handleLogout}

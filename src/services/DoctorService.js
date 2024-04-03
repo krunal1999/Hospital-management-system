@@ -33,6 +33,12 @@ class DoctorService {
     );
   }
 
+  getDoctortAppointmentsCompleted(id) {
+    return axiosInstance.get(
+      `${config.serverUrl}/doctor/profile/appointmentcomplete/${id}`
+    );
+  }
+
   givePrescription(data) {
     return axiosInstance.post(
       `${config.serverUrl}/doctor/profile/prescription`,
@@ -43,6 +49,12 @@ class DoctorService {
   getAllPrescription() {
     return axiosInstance.get(
       `${config.serverUrl}/doctor/profile/getallprescription`
+    );
+  }
+
+  getPrescriptionByBookingId(id) {
+    return axiosInstance.get(
+      `${config.serverUrl}/doctor/profile/getprescriptionbyId/${id}`
     );
   }
 

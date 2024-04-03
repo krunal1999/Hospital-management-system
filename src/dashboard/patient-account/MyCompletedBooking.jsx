@@ -40,17 +40,17 @@ const MyCompletedBooking = () => {
 
       {storedStatus && (
         <div className="grid grid-cols-1  lg:grid-cols-2 gap-5">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <div className="overflow-x-auto bg-white rounded-lg shadow">
               <table className="w-full">
                 <thead>
                   <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                    <th className="py-3 px-8">Booking Date</th>
-                    <th className="py-3 px-12">Booking Status</th>
                     <th className="py-3 px-8">Visited Date</th>
+                    <th className="py-3 px-12">Booking Status</th>
                     <th className="py-3 px-6">Payment</th>
                     <th className="py-3 px-6">Bill Status</th>
                     <th className="py-3 px-10">PayNow</th>
+                    <th className="py-3 px-6">Give FeedBack</th>
                   </tr>
                 </thead>
                 {appointment?.map((doctor) => (

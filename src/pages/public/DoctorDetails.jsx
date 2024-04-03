@@ -9,7 +9,7 @@ import SidePanel from "./SidePanel";
 import doctoreService from "../../services/DoctorService.js";
 import reviewService from "../../services/ReviewService.js";
 const DoctorDetails = () => {
-  const [tab, setTab] = useState("about");
+  const [tab, setTab] = useState("feedback");
   const { id } = useParams();
 
   const [doctor, setDoctor] = useState(null);

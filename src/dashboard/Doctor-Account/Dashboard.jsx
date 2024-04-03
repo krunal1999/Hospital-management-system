@@ -7,10 +7,8 @@ import DoctorAbout from "../../pages/doctor/DoctorAbout";
 import Appointments from "./Appointments";
 import doctoreService from "../../services/DoctorService";
 import PatientDetails from "./PatientDetails";
-
-// import doctorImg from "../../assets/images/doctor-img02.png";
-// import { BASE_URL } from "../../config";
-// import useGetProfile from "../../hooks/useFetchData";
+import BookingHistory from "./BookingHistory";
+import DoctorHistoryPatient from "./DoctorHistoryPatient";
 
 const Dashboard = () => {
   const [tab, setTab] = useState("overview");
@@ -51,7 +49,6 @@ const Dashboard = () => {
             <Tabs tab={tab} setTab={setTab} />
 
             <div className="lg:col-span-2">
-              
               {doctorData?.loggedUser.isApproved === "pending" && (
                 <div
                   id="alert-4"
@@ -135,20 +132,31 @@ const Dashboard = () => {
                 )}
                 {tab === "settings" && <Profile doctorData={doctorData} />}
                 {tab === "appointments" && (
-                  // <Appointments
-                  //   appointments={doctorData?.loggedUser.appointments}
-                  // />
                   <Appointments
                     setTab={setTab}
                     setPatientData={setPatientData}
                   />
                 )}
+                {tab === "BookingHistory" && (
+                  <BookingHistory
+                    setTab={setTab}
+                    setPatientData={setPatientData}
+                  />
+                )}
+                {tab === "ManageAvailability" && (
+                  <Profile doctorData={doctorData} />
+                )}
+
                 {tab === "patient" && (
                   <PatientDetails
                     patientData={patientData}
                     doctorData={doctorData?.loggedUser}
                     setTab={setTab}
                   />
+                )}
+
+                {tab === "doctorHistoryPatient" && (
+                  <DoctorHistoryPatient patientData={patientData}  />
                 )}
               </div>
             </div>

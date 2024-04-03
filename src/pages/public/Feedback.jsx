@@ -13,7 +13,7 @@ const Feedback = ({ reviews, totalRating }) => {
 
   return (
     <div>
-      <div className="mb-[50px]">
+      <div className="mb-[50px] h-64 w-full overflow-y-auto">
         <h4 className="text-[20px] leading-[30px] text-headingColor font-bold mb-[30px]">
           All Reviews ({totalRating})
         </h4>

@@ -124,7 +124,7 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
               <option value="">Select Medicine</option>
               {medicineList.map((medicine) => (
                 <option key={medicine.name} value={medicine.name}>
-                  {medicine.name} - ${medicine.price}
+                  {medicine.name} - £{medicine.price}
                 </option>
               ))}
             </select>
@@ -185,7 +185,7 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
               <option value="">Select Status</option>
               <option value="Cancelled">Cancelled</option>
               <option value="Completed">Completed</option>
-              <option value="No Show">No Show</option>
+              <option value="NoShow">No Show</option>
             </select>
           </div>
           <div className="mt-4">
@@ -212,7 +212,7 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
                 <span>
                   {medicine.name} ({medicine.quantity})
                 </span>
-                <span>${(medicine.price * medicine.quantity).toFixed(2)}</span>
+                <span>£{(medicine.price * medicine.quantity).toFixed(2)}</span>
                 <button
                   onClick={() => removeMedicine(index)}
                   className="bg-red-500 text-white py-1 px-2 rounded-md hover:bg-red-600"
@@ -238,7 +238,7 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
 
           <div className="mt-4 text-right">
             <span className="font-bold">
-              Total Cost: ${totalCost.toFixed(2)}
+              Total Cost: £{totalCost.toFixed(2)}
             </span>
           </div>
         </div>
