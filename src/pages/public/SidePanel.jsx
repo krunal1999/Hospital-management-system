@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import doctoreService from "./../../services/DoctorService";
 import conf from "../../config/config.js";
 import authenticationService from "../../services/AuthenticationService.js";
+import moment from "moment-timezone";
 
 const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
   const storedStatus = localStorage.getItem("status") === "true" ? true : false;
@@ -38,7 +39,7 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
   }, [doctorId]);
 
   const bookingHandler = async () => {
-    setLoading(true);
+    // setLoading(true);
     const bookingData = {
       ...selectedBooking,
       patientId: userData?.loggedUser._id,
@@ -52,6 +53,7 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
 
     // console.log(res.data.data);
     sendBookingMail(res.data.data);
+    // eventDetails(res.data.data);
 
     if (res.status === 200) {
       setLoading(false);
@@ -63,7 +65,35 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
     }
   };
 
+  function createGoogleCalendarLink(eventDetails) {
+    const { title, description, start, end, location } = eventDetails;
+    const startDateTime = new Date(start)
+      .toISOString()
+      .replace(/-|:|\.\d+/g, "");
+    const endDateTime = new Date(end).toISOString().replace(/-|:|\.\d+/g, "");
+    const calendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE`;
+    const eventUrl = `&text=${encodeURIComponent(
+      title
+    )}&details=${encodeURIComponent(
+      description
+    )}&dates=${startDateTime}/${endDateTime}&location=${encodeURIComponent(
+      location
+    )}`;
+
+    return calendarUrl + eventUrl;
+  }
+
   const sendBookingMail = async (data) => {
+    const Details = {
+      title: `Appointment Confirmation for ${data.date}`,
+      description: "Please arrive 15 min before start time",
+      start: data.futureStartDate,
+      end: data.futureEndDate,
+      location: "London, UK",
+    };
+
+    const calendarLink = createGoogleCalendarLink(Details);
+
     let subject = `Appointment Confirmation for ${data.date}
     `;
     let text = `Dear ${userData.fullName},
@@ -78,6 +108,8 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
     Time: ${data.startTime} to ${data.endTime}
     Status: ${data.bookingStatus}
     Please note that this appointment has already been ${data.bookingStatus.toLowerCase()} and is not available for rescheduling.
+
+    Add to Calender : ${calendarLink}
     
     If you have any questions or need to make changes, please feel free to contact us at your earliest convenience.
     
