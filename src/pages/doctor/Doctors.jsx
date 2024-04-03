@@ -1,74 +1,46 @@
-import { useCallback, useEffect, useState } from "react";
-import HashLoader from "react-spinners/HashLoader";
-import Testimonial from "../public/Testimonial";
-import doctoreService from "../../services/DoctorService";
-
+import { useEffect, useState } from "react";
 import DoctorCard from "../public/DoctorCard";
-// import { BASE_URL } from "../../config";
-// import useFetchData from "../../hooks/useFetchData";
+import Testimonial from "../public/Testimonial";
+
+import HashLoader from "react-spinners/HashLoader";
+import doctoreService from "../../services/DoctorService";
+import axios from "axios";
 
 const Doctors = () => {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
 
+  const [doctors, setDoctors] = useState([]);
 
-  // let doctorsQueryData;
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await doctoreService.getAllDoctor(debouncedQuery);
-  //       console.log(res.data.data);
-  //       doctorsQueryData = res.data.data
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchData();
-  //   return () => {};
-  // },[]);
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        console.log(debouncedQuery);
+        // const res = await doctoreService.getAllDoctor(debouncedQuery);
+        const res = await axios.get(
+          `http://localhost:8000/api/v1/doctor?query=${debouncedQuery}`
+        );
 
-  // const handleSearch = () => {
-  //   setQuery(query.trim());
-  // };
-
-  // useEffect(() => {
-  //   // Debounce the query value after 500ms of inactivity
-  //   const timeoutId = setTimeout(() => {
-  //     setDebouncedQuery(query);
-  //   }, 700);
-
-  //   // Clean up the timeout
-  //   return () => clearTimeout(timeoutId);
-  // }, [query]);
-
-  const [doctorsQueryData, setDoctorsQueryData] = useState([]);
-  // console.log(doctorsQueryData);
-  const fetchData = useCallback(async (query) => {
-    try {
-      const res = await doctoreService.getAllDoctor(query);
-      setDoctorsQueryData(res.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+        console.log(res.data.data);
+        setDoctors(res.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchdata();
+  }, [debouncedQuery]);
 
   const handleSearch = () => {
     setQuery(query.trim());
   };
 
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      if (query) {
-        setDebouncedQuery(query);
-        fetchData(query);
-      } else {
-        setDebouncedQuery("");
-        fetchData("");
-      }
+    const timeoutId = setTimeout(() => {
+      setDebouncedQuery(query);
     }, 700);
 
-    return () => clearTimeout(delayDebounceFn);
-  }, [query, fetchData]);
+    return () => clearTimeout(timeoutId);
+  }, [query]);
 
   return (
     <>
@@ -99,9 +71,9 @@ const Doctors = () => {
             <div className="flex items-center justify-center w-full h-full">
               <HashLoader color="#0067FF" />
             </div>
-          )}
+          )} */}
 
-          {error && (
+          {/* {error && (
             <div className="flex items-center justify-center w-full h-full">
               <h3 className="text-headingColor text-[20px] font-semibold leading-[30px]">
                 {error}
@@ -111,10 +83,11 @@ const Doctors = () => {
 
           {/* {!loading && !error && ( */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-              {doctorsQueryData?.map((doctor) => (
+            {doctors &&
+              doctors?.map((doctor) => (
                 <DoctorCard doctor={doctor} key={doctor._id} />
               ))}
-            </div>
+          </div>
           {/* )} */}
         </div>
       </section>

@@ -17,8 +17,14 @@ class DoctorService {
     return axiosInstance.get(`${config.serverUrl}/doctor/${id}`);
   }
 
-  getAllDoctor(query) {
-    return axiosInstance.get(`${config.serverUrl}/doctor?query=${query}`);
+  // getAllDoctor(query) {
+  //   return axiosInstance.get(`${config.serverUrl}/doctor?query=${query}`);
+  // }
+
+  getAllDoctor(debouncedQuery) {
+    return axiosInstance.get(
+      `${config.serverUrl}/doctor?query=${debouncedQuery}`
+    );
   }
 
   getDoctortAppointments(id) {
