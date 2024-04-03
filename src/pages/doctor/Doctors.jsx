@@ -11,11 +11,38 @@ const Doctors = () => {
   const [debouncedQuery, setDebouncedQuery] = useState("");
 
   const [doctors, setDoctors] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [genderFilter, setGenderFilter] = useState("");
+  const [ratingFilter, setRatingFilter] = useState("");
+
+  const handleGenderFilter = (gender) => {
+    setGenderFilter(gender);
+  };
+
+  const handleRatingFilter = (rating) => {
+    setRatingFilter(rating);
+  };
+
+  const filteredDoctors = doctors
+    .filter((doctor) => {
+      if (genderFilter && doctor.gender !== genderFilter.toLowerCase()) {
+        return false;
+      }
+      return true;
+    })
+    .sort((a, b) => {
+      if (ratingFilter === "lowToHigh") {
+        return a.avgRating - b.avgRating;
+      } else if (ratingFilter === "highToLow") {
+        return b.avgRating - a.avgRating;
+      }
+      return 0;
+    });
 
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        console.log(debouncedQuery);
+        setLoading(true);
         // const res = await doctoreService.getAllDoctor(debouncedQuery);
         const res = await axios.get(
           `http://localhost:8000/api/v1/doctor?query=${debouncedQuery}`
@@ -23,8 +50,10 @@ const Doctors = () => {
 
         console.log(res.data.data);
         setDoctors(res.data.data);
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
     fetchdata();
@@ -63,32 +92,57 @@ const Doctors = () => {
             </button>
           </div>
         </div>
+
+        <div className="container text-center mt-4">
+          <div className="flex justify-center space-x-4">
+            <div>
+              <label className="block text-xl font-semibold mb-2">
+                Filter by Gender
+              </label>
+              <select
+                value={genderFilter}
+                onChange={(e) => handleGenderFilter(e.target.value)}
+                className="py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">All</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xl font-semibold mb-2">
+                Sort by Rating
+              </label>
+              <select
+                value={ratingFilter}
+                onChange={(e) => handleRatingFilter(e.target.value)}
+                className="py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">None</option>
+                <option value="lowToHigh">Low to High</option>
+                <option value="highToLow">High to Low</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section>
         <div className="container">
-          {/* {loading && (
+          {loading && (
             <div className="flex items-center justify-center w-full h-full">
               <HashLoader color="#0067FF" />
             </div>
-          )} */}
+          )}
 
-          {/* {error && (
-            <div className="flex items-center justify-center w-full h-full">
-              <h3 className="text-headingColor text-[20px] font-semibold leading-[30px]">
-                {error}
-              </h3>
-            </div>
-          )} */}
-
-          {/* {!loading && !error && ( */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-            {doctors &&
-              doctors?.map((doctor) => (
+          {!loading && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+              {filteredDoctors.map((doctor) => (
                 <DoctorCard doctor={doctor} key={doctor._id} />
               ))}
-          </div>
-          {/* )} */}
+            </div>
+          )}
         </div>
       </section>
 

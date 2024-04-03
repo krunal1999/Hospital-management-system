@@ -51,7 +51,7 @@ const Dashboard = () => {
             <Tabs tab={tab} setTab={setTab} />
 
             <div className="lg:col-span-2">
-              {/* // add pending here */}
+              
               {doctorData?.loggedUser.isApproved === "pending" && (
                 <div
                   id="alert-4"

@@ -45,7 +45,7 @@ const DoctorDetails = () => {
     reviews,
     bio,
     about,
-    averageRating,
+    avgRating,
     totalRating,
     specialization,
     ticketPrice,
@@ -85,7 +85,7 @@ const DoctorDetails = () => {
                 </h3>
                 <div className="flex items-center gap-[6px]">
                   <span className="flex items-center gap-[6px] text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-[600] text-headingColor">
-                    <img src={starIcon} alt="" /> {averageRating}
+                    <img src={starIcon} alt="" /> {avgRating}
                   </span>
                   <span className="text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-[400] text-textColor">
                     ({totalRating})
@@ -142,7 +142,7 @@ const DoctorDetails = () => {
               doctorId={doctor._id}
               ticketPrice={ticketPrice}
               timeSlots={timeSlots}
-              doctorInfo = {doctor}
+              doctorInfo={doctor}
             />
           </div>
         </div>

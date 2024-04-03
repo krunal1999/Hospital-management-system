@@ -9,7 +9,7 @@ const Feedback = ({ reviews, totalRating }) => {
   const [showForm, setShowForm] = useState(false);
   console.log("review", reviews);
   
-  // console.log(totalRating);
+  
 
   return (
     <div>
