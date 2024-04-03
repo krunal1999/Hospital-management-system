@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import bookingService from "../../services/BookingService";
 import { toast } from "react-toastify";
 
-const DateInputForm = () => {
+const ManageAvailability = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [loading, setLoading] = useState(false);
+  const [bookings, setBookings] = useState([]);
+  const [selectedBooking, setSelectedBooking] = useState(null);
+
+  const handleBookingSelect = (event) => {
+    const selectedBookingId = event.target.value;
+    const booking = bookings.find((b) => b._id === selectedBookingId);
+    setSelectedBooking(booking);
+  };
+  const storedStatus = localStorage.getItem("status") === "true" ? true : false;
+
+  let doctorData = JSON.parse(localStorage.getItem("user"));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,7 +26,13 @@ const DateInputForm = () => {
 
     try {
       setLoading(true);
-      const res = await bookingService.generateSlots({ startDate, endDate });
+      const res = await bookingService.generateSlotsById(
+        doctorData?.loggedUser._id,
+        {
+          startDate,
+          endDate,
+        }
+      );
       console.log(res.data);
       console.log(res.status);
       if (res.status !== 200) {
@@ -37,10 +54,14 @@ const DateInputForm = () => {
 
     console.log("Start Date:", startDate);
     console.log("End Date:", endDate);
-
+    let id = doctorData?.loggedUser._id;
     try {
       setLoading(true);
-      const res = await bookingService.deleteSlots({ startDate, endDate });
+      const res = await bookingService.deleteSlotsById({
+        id,
+        startDate,
+        endDate,
+      });
       console.log(res.data);
       console.log(res.status);
       if (res.status !== 200) {
@@ -57,6 +78,25 @@ const DateInputForm = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const res = await bookingService.bookedSlotsAll(
+          doctorData?.loggedUser._id
+        );
+        console.log(res.data.data);
+        setBookings(res.data.data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+    return () => {};
+  }, [doctorData?.loggedUser._id]);
+
+ 
   return (
     <div className="max-w-md mx-auto mt-8">
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -121,9 +161,37 @@ const DateInputForm = () => {
           </button>
         )}
       </form>
-     
+
+      <div className="w-full mt-4 gap-4">
+        {storedStatus && (
+          <div className="booking-list">
+            <select
+              className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              value={selectedBooking ? selectedBooking._id : ""}
+              onChange={handleBookingSelect}
+            >
+              <option value="">Booked Dates</option>
+              {bookings.length > 0 &&
+                bookings.map((booking) => (
+                  <option key={booking._id} value={booking._id}>
+                    {`${booking.date} - ${booking.startTime} - ${booking.endTime}`}
+                  </option>
+                ))}
+            </select>
+
+            {selectedBooking && (
+              <div className="selected-booking mt-4 p-4 bg-gray-100 rounded-md">
+                <div className="date font-semibold text-gray-800">
+                  {selectedBooking.date}
+                </div>
+                <div className="time text-gray-600">{`${selectedBooking.startTime} - ${selectedBooking.endTime}`}</div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
-export default DateInputForm;
+export default ManageAvailability;

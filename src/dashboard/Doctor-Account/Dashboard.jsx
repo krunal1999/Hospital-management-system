@@ -9,6 +9,7 @@ import doctoreService from "../../services/DoctorService";
 import PatientDetails from "./PatientDetails";
 import BookingHistory from "./BookingHistory";
 import DoctorHistoryPatient from "./DoctorHistoryPatient";
+import ManageAvailability from "./ManageAvailability";
 
 const Dashboard = () => {
   const [tab, setTab] = useState("overview");
@@ -143,9 +144,7 @@ const Dashboard = () => {
                     setPatientData={setPatientData}
                   />
                 )}
-                {tab === "ManageAvailability" && (
-                  <Profile doctorData={doctorData} />
-                )}
+                {tab === "ManageAvailability" && <ManageAvailability />}
 
                 {tab === "patient" && (
                   <PatientDetails
@@ -156,7 +155,7 @@ const Dashboard = () => {
                 )}
 
                 {tab === "doctorHistoryPatient" && (
-                  <DoctorHistoryPatient patientData={patientData}  />
+                  <DoctorHistoryPatient patientData={patientData} />
                 )}
               </div>
             </div>

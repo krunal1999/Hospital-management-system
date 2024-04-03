@@ -14,8 +14,8 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
   const storedStatus = localStorage.getItem("status") === "true" ? true : false;
   let userData = JSON.parse(localStorage.getItem("user"));
 
-  console.log(doctorInfo.isApproved);
-  console.log(doctorInfo.isAllowed);
+  // console.log(doctorInfo.isApproved);
+  // console.log(doctorInfo.isAllowed);
 
   const [bookings, setBookings] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState(null);
@@ -248,13 +248,14 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
                 <button
                   onClick={approvehandler}
                   className="px-2 btn w-full rounded-md bg-yellow-600"
+                  disabled={userData.role === "doctor"}
                 >
                   Click To Approve
                 </button>
               ) : (
                 <button
-                  disabled
                   className="px-2 btn w-full rounded-md bg-green-600"
+                  disabled
                 >
                   Approved
                 </button>
@@ -264,6 +265,7 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
                 <button
                   onClick={bookingAvailablehandler}
                   className="px-2 btn w-full rounded-md bg-green-600"
+                  disabled={userData.role === "doctor"}
                 >
                   Doctor Available
                 </button>
@@ -271,6 +273,7 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
                 <button
                   onClick={bookingAvailablehandler}
                   className="px-2 btn w-full rounded-md bg-red-600"
+                  disabled={userData.role === "doctor"}
                 >
                   Doctor Not Available
                 </button>
