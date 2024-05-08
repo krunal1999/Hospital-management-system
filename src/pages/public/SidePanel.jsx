@@ -27,7 +27,7 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
       try {
         setLoading(true);
         const res = await bookingService.getAvailbleBookingByDrID(doctorId);
-        console.log(res.data.data);
+        console.log("booking" , res.data.data);
         setBookings(res.data.data);
         setLoading(false);
       } catch (error) {

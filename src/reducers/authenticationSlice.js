@@ -26,7 +26,6 @@ const authenticationSlice = createSlice({
     login: (state, action) => {
       state.user = action.payload;
       state.status = true;
-
       localStorage.setItem("user", JSON.stringify(action.payload));
       localStorage.setItem("status", "true");
     },
