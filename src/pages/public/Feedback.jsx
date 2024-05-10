@@ -1,13 +1,28 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { formatDate } from "../../utils/formatDate.js";
 
 import FeedbackForm from "./FeedbackForm";
+import { useLocation } from "react-router-dom";
 // import avatar from "../../assets/images/avatar-icon.png";
 const Feedback = ({ reviews, totalRating }) => {
+
+
   const [showForm, setShowForm] = useState(false);
+  const [feedbackToggle, setfeedbackToggle] = useState(false);
+
   console.log("review", reviews);
+
+  const location = useLocation();
+  useEffect(() => {
+    // Get the query parameter 'type' from the URL
+    const searchParams = new URLSearchParams(location.search);
+    const feedback = searchParams.get('feedback');
+
+    // Set the query state to the value of the query parameter, or "" if it doesn't exist
+    setfeedbackToggle(feedback || false);
+}, [location.search]);
   
   
 
@@ -46,7 +61,7 @@ const Feedback = ({ reviews, totalRating }) => {
         ))}
       </div>
 
-      {!showForm && (
+      {feedbackToggle && !showForm &&  (
         <div className="text-center">
           <button className="btn" onClick={() => setShowForm(true)}>
             Give Feedback
@@ -54,7 +69,6 @@ const Feedback = ({ reviews, totalRating }) => {
         </div>
       )}
 
-      {/* ========== tour reviews section end =========== */}
 
       {showForm && <FeedbackForm />}
     </div>

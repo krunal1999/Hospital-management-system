@@ -28,7 +28,7 @@ const MyCompletedBooking = () => {
     return () => {};
   }, [userData?.loggedUser._id]);
 
-  console.log(appointment);
+  console.log("appointment" ,appointment );
 
   return (
     <div>
@@ -53,7 +53,7 @@ const MyCompletedBooking = () => {
                     <th className="py-3 px-6">Give FeedBack</th>
                   </tr>
                 </thead>
-                {appointment?.map((doctor) => (
+                {appointment.length > 0 && appointment?.map((doctor) => (
                   // <DoctorCard doctor={doctor.doctorId} key={doctor._id} />
                   <CompletBookingTable key={doctor._id} booking={doctor} />
                 ))}

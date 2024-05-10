@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../reducers/authenticationSlice";
 import patientService from "../../services/patientService";
 import MyCompletedBooking from "./MyCompletedBooking";
+import PatientHistory from "./PatientHistory";
 
 const MyAccount = () => {
   const dispatch = useDispatch();
@@ -102,12 +103,12 @@ const MyAccount = () => {
                 >
                   Logout
                 </button>
-                <button
+                {/* <button
                   disabled
                   className="w-full bg-red-600 mt-4 p-3 rounded-md text-white text-[16px] leading-7 disabled:opacity-50 disabled:cursor-not-allowed hover:disabled:cursor-not-allowed"
                 >
                   Delete Account
-                </button>
+                </button> */}
               </div>
             </div>
 
@@ -130,6 +131,18 @@ const MyAccount = () => {
                 >
                   Completed Bookings
                 </button>
+
+                <button
+                  onClick={() => setTab("history")}
+                  className={`${
+                    tab === "history" &&
+                    "bg-[#0067FF] text-white font-normal"
+                  }  p-2 mr-5 px-5 rounded-md text-headingColor font-semibold text-[16px] leading-7  border border-solid border-[#0067FF]`}
+                >
+                  History
+                </button>
+                
+
                 <button
                   onClick={() => setTab("settings")}
                   className={`${
@@ -152,6 +165,12 @@ const MyAccount = () => {
                   <div>
                     <h2 className="heading text-[30px]">My bookings</h2>
                     <MyCompletedBooking />
+                  </div>
+                )}
+
+                {tab === "history" && (
+                  <div>                  
+                    <PatientHistory  pid = {userData?.loggedUser._id}/>
                   </div>
                 )}
 

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import heroImg01 from "../../assets/images/hero-img01.png";
 import heroImg02 from "../../assets/images/hero-img02.png";
@@ -21,6 +21,7 @@ import { BsArrowRight } from "react-icons/bs";
 // import DoctorsList from "../components/Doctors/DoctorsList";
 
 const Home = () => {
+  const nav = useNavigate();
   return (
     <>
       <section className="hero__section pt-[60px] 2xl:h-[800px]">
@@ -33,12 +34,15 @@ const Home = () => {
                   We help patients live a healthy, longer life.
                 </h1>
                 <p className="text__para">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Natus quaerat cumque fugit, perspiciatis cum nemo aperiam, aut
-                  quia earum amet architecto, modi odio. Soluta unde ducimus
-                  perferendis?
+                  At our hospital, we are dedicated to improving lives and
+                  promoting well-being. Our team of skilled professionals is
+                  committed to delivering high-quality healthcare services to
+                  our community. Whether you need routine check-ups, specialized
+                  treatments, or emergency care, we're here for you.
                 </p>
-                <button className="btn">Request an Appointment </button>
+                <button className="btn" onClick={() => nav("/finddoctors")}>
+                  Request an Appointment{" "}
+                </button>
               </div>
 
               <div className="mt-[30px] lg:mt-[70px] flex flex-col md:flex-row lg:items-center gap-5 lg:gap-[30px]">
@@ -93,8 +97,9 @@ const Home = () => {
               Providing the best medical services
             </h2>
             <p className="text__para text-center">
-              World-class care for everyone. Our health System offers unmatched,
-              expert health care.
+              At our hospital, we are committed to delivering world-class care
+              to everyone. Our expert health system offers unmatched services,
+              from cutting-edge lab work to personalized clinic treatments.
             </p>
           </div>
 
@@ -109,12 +114,15 @@ const Home = () => {
                   Find a Doctor
                 </h2>
                 <p className="text-[16px] leading-7 text-textColor font-[400] mt-4 text-center">
-                  World-class care for everyone. Our health System offers
-                  unmatched, expert health care. From the lab to the clinic.
+                  Our team of dedicated physicians is committed to your
+                  well-being. Whether you are seeking preventive care or
+                  managing a specific health condition, our personalized
+                  approach ensures that you receive the attention and expertise
+                  you deserve.
                 </p>
 
                 <Link
-                  to="/doctors"
+                  to="/finddoctors"
                   className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-buttonBgColor hover:border-none"
                 >
                   <BsArrowRight className="group-hover:text-white w-6 h-5" />
@@ -129,15 +137,17 @@ const Home = () => {
 
               <div className="mt-[30px]">
                 <h2 className="text-[26px] leading-9 text-headingColor font-[700] text-center">
-                  Find a Location
+                  Book from Anywhere
                 </h2>
                 <p className="text-[16px] leading-7 text-textColor font-[400] mt-4 text-center">
-                  World-class care for everyone. Our health System offers
-                  unmatched, expert health care. From the lab to the clinic.
+                  Our convenient online booking system allows you to schedule
+                  appointments effortlessly. Whether you're at home, work, or on
+                  the go, you can access our services anytime. Say goodbye to
+                  waiting on hold—book your appointment with ease!
                 </p>
 
                 <Link
-                  to="/doctors"
+                  to="/finddoctors"
                   className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-buttonBgColor hover:border-none"
                 >
                   <BsArrowRight className="group-hover:text-white w-6 h-5" />
@@ -154,12 +164,15 @@ const Home = () => {
                   Book Appointment
                 </h2>
                 <p className="text-[16px] leading-7 text-textColor font-[400] mt-4 text-center">
-                  World-class care for everyone. Our health System offers
-                  unmatched, expert health care. From the lab to the clinic.
+                  Our streamlined appointment booking process ensures that you
+                  can access our services with ease. Whether you're seeking a
+                  routine check-up or need specialized care, we're here to
+                  assist you. Say goodbye to long wait times—book your
+                  appointment today!
                 </p>
 
                 <Link
-                  to="/doctors"
+                  to="/finddoctors"
                   className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-buttonBgColor hover:border-none"
                 >
                   <BsArrowRight className="group-hover:text-white w-6 h-5" />
@@ -177,8 +190,9 @@ const Home = () => {
           <div className="xl:w-[470px] mx-auto">
             <h2 className="heading text-center">Our medical services</h2>
             <p className="text__para text-center">
-              World-class care for everyone. Our health System offers unmatched,
-              expert health care.
+              At our hospital, we offer a wide range of medical services to meet
+              your needs. From preventive care and diagnostics to specialized
+              treatments, our dedicated team is here for you.
             </p>
           </div>
 
@@ -206,7 +220,7 @@ const Home = () => {
                   online scheduling tool to select an appointment time.
                 </li>
               </ul>
-              <Link to="/">
+              <Link to="/finddoctors">
                 <button className="btn">Learn More</button>
               </Link>
             </div>
@@ -251,8 +265,11 @@ const Home = () => {
           <div className="xl:w-[470px] mx-auto">
             <h2 className="heading text-center">Our great doctors</h2>
             <p className="text__para text-center">
-              World-class care for everyone. Our health System offers unmatched,
-              expert health care.
+              At our hospital, we take pride in our team of highly skilled
+              doctors. Each specialist brings a wealth of experience and
+              expertise to our patients. Whether you are seeking treatment for a
+              specific condition or need preventive care, our dedicated
+              physicians are here to guide you on your health journey.
             </p>
           </div>
 
@@ -283,8 +300,7 @@ const Home = () => {
           <div className="xl:w-[470px] mx-auto">
             <h2 className="heading text-center">What our patient say</h2>
             <p className="text__para text-center">
-              World-class care for everyone. Our health System offers unmatched,
-              expert health care.
+            Patient testimonials are a powerful way to earn trust and attract new patients to your practice. At our hospital, we've received heartfelt feedback from individuals whose lives we've impacted. Here are some of their stories
             </p>
           </div>
 

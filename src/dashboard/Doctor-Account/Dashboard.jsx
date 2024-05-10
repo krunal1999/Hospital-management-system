@@ -12,7 +12,7 @@ import DoctorHistoryPatient from "./DoctorHistoryPatient";
 import ManageAvailability from "./ManageAvailability";
 
 const Dashboard = () => {
-  const [tab, setTab] = useState("overview");
+  const [tab, setTab] = useState("settings");
   const [patientData, setPatientData] = useState(null);
 
   let doctorData = JSON.parse(localStorage.getItem("user"));
@@ -131,7 +131,7 @@ const Dashboard = () => {
                     />
                   </div>
                 )}
-                {tab === "settings" && <Profile doctorData={doctorData} />}
+                {tab === "settings" && <Profile doctorData={doctorData} setTab={setTab} />}
                 {tab === "appointments" && (
                   <Appointments
                     setTab={setTab}

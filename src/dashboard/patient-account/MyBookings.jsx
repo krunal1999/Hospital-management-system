@@ -18,6 +18,10 @@ const MyBookings = () => {
           userData?.loggedUser._id
         );
         setAppointment(res.data.data);
+        console.log(res.data.data.length)
+        localStorage.setItem('bookingLength', JSON.stringify(res.data.data.length));
+
+
       } catch (error) {
         console.log(error);
       }

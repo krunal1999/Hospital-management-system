@@ -10,14 +10,15 @@ const CompletBookingTable = ({ booking }) => {
     totalCost,
     paidStatus,
     delivered,
-    bookingId: { date },
+    // bookingId: { date },
   } = booking;
-  // to={`/doctors/${doctor._id}`}
+  
+  console.log("----------------------",booking)
 
   const navigate = useNavigate()
   const handleReview = async (booking) => {
-    // console.log(booking.doctorId)
-    navigate(`/doctors/${booking.doctorId}`)
+  
+    navigate(`/doctors/${booking.doctorId}?feedback=true`)
   };
 
   const handleClick = async (booking) => {
@@ -54,6 +55,7 @@ const CompletBookingTable = ({ booking }) => {
   };
 
   return (
+    (booking.bookingId && 
     <tbody className="text-gray-600 text-sm font-light">
       <tr className="border-b border-gray-200 hover:bg-gray-100">
         <td className="py-3 px-6">{formatDate(visitedDate)}</td>
@@ -88,7 +90,7 @@ const CompletBookingTable = ({ booking }) => {
               className="bg-green-500 text-white font-bold py-1 px-1 rounded"
               disabled={paidStatus === "Paid" || visitStatus === "Cancelled"}
             >
-              {delivered ? "Order Delievered" : "Order Pending"}
+              {delivered ? "Order Shipped" : "Order Pending"}
             </button>
           )}
         </td>
@@ -101,7 +103,7 @@ const CompletBookingTable = ({ booking }) => {
           </button>
         </td>
       </tr>
-    </tbody>
+    </tbody> )
   );
 };
 

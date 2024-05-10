@@ -1,4 +1,4 @@
-import logo from "../../assets/images/logo.png";
+import logo1 from "../../assets/images/logo33.png";
 import { Link } from "react-router-dom";
 import { RiLinkedinFill } from "react-icons/ri";
 import {
@@ -32,43 +32,23 @@ const quickLinks01 = [
     display: "Home",
   },
   {
-    path: "/",
-    display: "About Us",
-  },
-  {
     path: "/services",
     display: "Services",
-  },
-  {
-    path: "/",
-    display: "Blog",
-  },
+  }
 ];
 
 const quickLinks02 = [
   {
-    path: "/find-a-doctor",
+    path: "/finddoctors",
     display: "Find a Doctor",
   },
   {
-    path: "/",
+    path: "/finddoctors",
     display: "Request an Appointment",
-  },
-  {
-    path: "/",
-    display: "Find a Location",
-  },
-  {
-    path: "/",
-    display: "Get a Opinion",
-  },
+  }
 ];
 
 const quickLinks03 = [
-  {
-    path: "/",
-    display: "Donate",
-  },
   {
     path: "/contact",
     display: "Contact Us",
@@ -83,7 +63,7 @@ const Footer = () => {
       <div className="container">
         <div className="flex justify-between flex-col md:flex-row flex-wrap gap-[30px]">
           <div>
-            <img src={logo} alt="" />
+            <img src={logo1} alt="" className="w-64" />
             <p className="text-[16px] leading-7 font-[400] text-textColor mt-4">
               Copyright © {year} developed by Sai Charan all rights reserved.
             </p>

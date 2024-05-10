@@ -4,13 +4,14 @@ import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 /* eslint-disable react/prop-types */
 const PatientItem = ({ item }) => {
   const [isOpen, setIsOpen] = useState(false);
-  let visiteDate = new Date(item.bookingId.date);
+  let visiteDate = new Date(item?.bookingId?.date);
 
   function toggleAccordion() {
     setIsOpen(!isOpen);
   }
 
   return (
+    (item?.bookingId && 
     <div className="p-3 lg:p-5 rounded-[12px] border border-solid border-[#D9DCE2] mb-5 cursor-pointer">
       <div
         className="flex items-center justify-between gap-5 "
@@ -18,7 +19,7 @@ const PatientItem = ({ item }) => {
       >
         <h4 className="text-[16px] leading-7 lg:text-[22px] lg:leading-8 font-[700] text-headingColor">
           {`${visiteDate.toDateString()} -- ${
-            item.bookingId.bookingStatus
+            item?.bookingId.bookingStatus
           } -- ${item.paidStatus} -- ${item.totalCost}`}
         </h4>
         <div
@@ -141,7 +142,7 @@ const PatientItem = ({ item }) => {
           </div>
         </div>
       )}
-    </div>
+    </div>)
   );
 };
 

@@ -5,9 +5,9 @@ import uploadImageToCloudinary from "../../utils/uploadCloudinary.js";
 import { toast } from "react-toastify";
 import doctoreService from "../../services/DoctorService.js";
 
-const Profile = ({ doctorData }) => {
+const Profile = ({ doctorData , setTab }) => {
   const [selectedFile, setSelectedFile] = useState(null);
-
+  
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -35,7 +35,7 @@ const Profile = ({ doctorData }) => {
       qualifications: doctorData?.loggedUser.qualifications,
       experiences: doctorData?.loggedUser.experiences,
       about: doctorData?.loggedUser.about,
-      ticketPrice: doctorData?.loggedUser.ticketPrice,
+      ticketPrice: 0,
       specialization: doctorData?.loggedUser.specialization,
       timeSlots: doctorData?.loggedUser.timeSlots,
     });
@@ -60,6 +60,7 @@ const Profile = ({ doctorData }) => {
       console.log(id);
       const res = await doctoreService.updateDoctorProfile(id, formData);
       toast.success("Profile data Updated");
+      setTab("overview")
     } catch (error) {
       toast.error(error);
       console.log(error);
@@ -184,6 +185,7 @@ const Profile = ({ doctorData }) => {
             onChange={handleInputChange}
             placeholder="Full Name"
             className="form__input"
+            readOnly
           />
         </div>
         <div className="mb-5">
@@ -208,6 +210,8 @@ const Profile = ({ doctorData }) => {
             name="phone"
             placeholder="Phone Number"
             className="form__input"
+            required
+            min={1}
           />
         </div>
 
@@ -218,9 +222,10 @@ const Profile = ({ doctorData }) => {
             value={formData.bio}
             onChange={handleInputChange}
             name="bio"
-            maxLength={100}
+            maxLength={200}
             placeholder="Bio"
             className="form__input"
+            required
           />
         </div>
 
@@ -252,10 +257,30 @@ const Profile = ({ doctorData }) => {
                 <option value="surgeon">Surgeon</option>
                 <option value="neurologist">Neurologist</option>
                 <option value="dermatologist">Dermatologist</option>
+
+                <option value="anaesthesia">Anaesthesia</option>
+                <option value="audiovestibular">Audiovestibular</option>
+                <option value="histopathology">Histopathology</option>
+
+                <option value="Obstetrics and Gynaecology">Obstetrics and Gynaecology </option>
+                <option value="Paediatrics">Paediatrics</option>
+                <option value="Pathology">Pathology</option>
+
+                <option value="Plastic and Reconstructive Surgery">Plastic and Reconstructive Surgery</option>
+                <option value="Rheumatology">Rheumatology</option>
+                <option value="Rehabilitation Medicine">Rehabilitation Medicine</option>
+
+                <option value="Labor & Delivery">Labor & Delivery</option>
+                <option value="Heart & Vascular">Heart & Vascular</option>
+                <option value="Mental Health">Mental Health</option>
+                <option value="Burn Treatment">Burn Treatment</option>
+
+
+
               </select>
             </div>
 
-            <div>
+            {/* <div>
               <p className="form__label">Ticket Price*</p>
               <input
                 type="number"
@@ -265,7 +290,7 @@ const Profile = ({ doctorData }) => {
                 className="form__input"
                 onChange={handleInputChange}
               />
-            </div>
+            </div> */}
           </div>
         </div>
 

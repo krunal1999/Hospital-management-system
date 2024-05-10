@@ -4,6 +4,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import patientAvatar from "../../assets/images/patient-avatar.png";
+import patientAvatar1 from "../../assets/images/patient-avatar1.jpg";
+
 import { HiStar } from "react-icons/hi";
 
 const Testimonial = () => {
@@ -49,18 +51,20 @@ const Testimonial = () => {
             </div>
 
             <p className="text-[16px] leading-7 mt-4 text-textColor font-[400]">
-              “I have taken medical services from them. They treat so well and
-              they are provding the best medical services.”
+              “I was diagnosed with cancer, and my journey to recovery began at
+              this hospital. The compassionate care, advanced treatments, and
+              unwavering support from the medical team made all the difference.
+              Today, I'm cancer-free and grateful for their expertise”
             </p>
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="py-[30px] px-5 rounded-3 ">
             <div className="flex items-center gap-[13px]">
-              <img src={patientAvatar} alt="" />
+              <img src={patientAvatar1} className="h-12" alt="" />
               <div>
                 <h4 className="text-[18px] leading-[30px] text-headingColor font-[600]">
-                  Krunal
+                  Emily’s Labor Experience
                 </h4>
                 <div className="flex items-center gap-[2px]">
                   <HiStar className="text-yellowColor w-[18px] h-5" />
@@ -73,8 +77,10 @@ const Testimonial = () => {
             </div>
 
             <p className="text-[16px] leading-7 mt-4 text-textColor font-[400]">
-              “I have taken medical services from them. They treat so well and
-              they are provding the best medical services.”
+              “When I was expecting my first child, I chose this hospital for
+              labor and delivery. The personalized support, skilled midwives,
+              and comfortable environment made the experience memorable. Our
+              healthy baby girl arrived safely, thanks to the exceptional care.”
             </p>
           </div>
         </SwiperSlide>
@@ -84,7 +90,7 @@ const Testimonial = () => {
               <img src={patientAvatar} alt="" />
               <div>
                 <h4 className="text-[18px] leading-[30px] text-headingColor font-[600]">
-                  Sai Charan
+                  Michael’s Heart Health
                 </h4>
                 <div className="flex items-center gap-[2px]">
                   <HiStar className="text-yellowColor w-[18px] h-5" />
@@ -97,18 +103,20 @@ const Testimonial = () => {
             </div>
 
             <p className="text-[16px] leading-7 mt-4 text-textColor font-[400]">
-              “I have taken medical services from them. They treat so well and
-              they are provding the best medical services.”
+              “Living with heart disease was challenging until I found this
+              hospital. The cardiologists here not only treated my condition but
+              also educated me on lifestyle changes. Their commitment to my
+              well-being allowed me to regain control of my health”
             </p>
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="py-[30px] px-5 rounded-3 ">
             <div className="flex items-center gap-[13px]">
-              <img src={patientAvatar} alt="" />
+              <img src={patientAvatar1} className="h-12"  alt="" />
               <div>
                 <h4 className="text-[18px] leading-[30px] text-headingColor font-[600]">
-                  Ashok
+                  Sarah’s Mental Health Journey
                 </h4>
                 <div className="flex items-center gap-[2px]">
                   <HiStar className="text-yellowColor w-[18px] h-5" />
@@ -121,8 +129,10 @@ const Testimonial = () => {
             </div>
 
             <p className="text-[16px] leading-7 mt-4 text-textColor font-[400]">
-              “I have taken medical services from them. They treat so well and
-              they are provding the best medical services.”
+              Struggling with anxiety, I reached out to this hospital’s mental
+              health services. The therapists listened, empathized, and provided
+              effective coping strategies. Today, I manage my anxiety better,
+              all thanks to their dedicated team.
             </p>
           </div>
         </SwiperSlide>

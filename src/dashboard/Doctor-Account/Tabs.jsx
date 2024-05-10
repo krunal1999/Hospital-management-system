@@ -27,6 +27,16 @@ const Tabs = ({ tab, setTab }) => {
         className="hidden lg:flex items-center shadow-panelShadow  h-max p-[30px] bg-white  flex-col rounded-md"
       >
         <button
+          onClick={() => setTab("settings")}
+          className={` ${
+            tab === "settings"
+              ? "bg-indigo-100 text-[#0067FF]"
+              : "bg-transparent text-headingColor"
+          } w-full   btn rounded-md  mt-0`}
+        >
+          Profile
+        </button>
+        <button
           onClick={() => setTab("overview")}
           className={` ${
             tab === "overview"
@@ -47,16 +57,7 @@ const Tabs = ({ tab, setTab }) => {
           Appointments
         </button>
 
-        <button
-          onClick={() => setTab("settings")}
-          className={` ${
-            tab === "settings"
-              ? "bg-indigo-100 text-[#0067FF]"
-              : "bg-transparent text-headingColor"
-          } w-full   btn rounded-md  mt-0`}
-        >
-          Profile
-        </button>
+        
 
         <button
           onClick={() => setTab("BookingHistory")}
@@ -87,12 +88,12 @@ const Tabs = ({ tab, setTab }) => {
           >
             Logout
           </button>
-          <button
+          {/* <button
             disabled
             className="w-full bg-red-600 mt-4 p-3 rounded-md text-white text-[16px] leading-7 disabled:opacity-50 disabled:cursor-not-allowed hover:disabled:cursor-not-allowed"
           >
             Delete Account
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

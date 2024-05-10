@@ -5,8 +5,13 @@ import Testimonial from "../public/Testimonial";
 import HashLoader from "react-spinners/HashLoader";
 import doctoreService from "../../services/DoctorService";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const Doctors = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const doctorType = searchParams.get('type'); 
+
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
 
@@ -14,6 +19,8 @@ const Doctors = () => {
   const [loading, setLoading] = useState(false);
   const [genderFilter, setGenderFilter] = useState("");
   const [ratingFilter, setRatingFilter] = useState("");
+
+ 
 
   const handleGenderFilter = (gender) => {
     setGenderFilter(gender);
@@ -48,8 +55,15 @@ const Doctors = () => {
           `http://localhost:8000/api/v1/doctor?query=${debouncedQuery}`
         );
 
-        console.log(res.data.data);
-        setDoctors(res.data.data);
+        let allowedDr = res.data.data;
+        allowedDr = allowedDr.filter((dr)=> {if(dr.isAllowed && dr.isApproved === "approved"){
+          return dr;
+        }})
+        // console.log("asdasdasd", allowedDr);
+        // setDoctors(res.data.data);
+        setDoctors(allowedDr);
+
+        
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -60,7 +74,7 @@ const Doctors = () => {
   }, [debouncedQuery]);
 
   const handleSearch = () => {
-    setQuery(query.trim());
+      setQuery(doctorType);
   };
 
   useEffect(() => {
@@ -70,6 +84,16 @@ const Doctors = () => {
 
     return () => clearTimeout(timeoutId);
   }, [query]);
+
+  useEffect(() => {
+    // Get the query parameter 'type' from the URL
+    const searchParams = new URLSearchParams(location.search);
+    const doctorType = searchParams.get('type');
+
+    // Set the query state to the value of the query parameter, or "" if it doesn't exist
+    setQuery(doctorType || "");
+}, [location.search]);
+
 
   return (
     <>

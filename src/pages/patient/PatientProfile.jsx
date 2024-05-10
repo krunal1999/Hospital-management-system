@@ -8,6 +8,7 @@ const PatientProfile = () => {
   const [block, setBlock] = useState(null);
   const [bookingDetails, setBookingDetails] = useState(null);
   const [loading, setLoading] = useState(false);
+  
   const { id } = useParams();
   console.log("idd", id);
 

@@ -1,4 +1,6 @@
 import logo from "../../assets/images/logo.png";
+import logo1 from "../../assets/images/logo33.png";
+
 import { NavLink, Link } from "react-router-dom";
 import { BiMenu } from "react-icons/bi";
 import { useEffect, useRef, useState } from "react";
@@ -69,7 +71,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* =========== logo ========== */}
           <div>
-            <img src={logo} alt="logo" />
+            <img src={logo1} className="w-64" alt="logo" />
           </div>
 
           {/* ========== nav menu =========== */}

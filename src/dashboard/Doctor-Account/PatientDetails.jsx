@@ -6,12 +6,45 @@ import conf from "../../config/config";
 import authenticationService from "../../services/AuthenticationService";
 import { toast } from "react-toastify";
 
+// const medicineList = [
+//   { name: "Paracetamol", price: 2.5 },
+//   { name: "Ibuprofen", price: 3.0 },
+//   { name: "Amoxicillin", price: 5.0 },
+//   // Add more medicines as needed
+// ];
 const medicineList = [
   { name: "Paracetamol", price: 2.5 },
   { name: "Ibuprofen", price: 3.0 },
   { name: "Amoxicillin", price: 5.0 },
-  // Add more medicines as needed
+  { name: "Aspirin", price: 2.0 },
+  { name: "Loratadine", price: 4.5 },
+  { name: "Cetirizine", price: 3.5 },
+  { name: "Omeprazole", price: 6.0 },
+  { name: "Simvastatin", price: 7.5 },
+  { name: "Metformin", price: 4.0 },
+  { name: "Losartan", price: 5.5 },
+  { name: "Atorvastatin", price: 8.0 },
+  { name: "Levothyroxine", price: 6.5 },
+  { name: "Metoprolol", price: 4.5 },
+  { name: "Amlodipine", price: 5.0 },
+  { name: "Warfarin", price: 3.5 },
+  { name: "Fluoxetine", price: 6.5 },
+  { name: "Sertraline", price: 7.0 },
+  { name: "Escitalopram", price: 7.5 },
+  { name: "Venlafaxine", price: 8.5 },
+  { name: "Duloxetine", price: 9.0 },
+  { name: "Pregabalin", price: 10.0 },
+  { name: "Gabapentin", price: 9.5 },
+  { name: "Ranitidine", price: 3.0 },
+  { name: "Furosemide", price: 4.5 },
+  { name: "Hydrochlorothiazide", price: 5.0 },
+  { name: "Tamsulosin", price: 6.0 },
+  { name: "Metoclopramide", price: 3.5 },
+  { name: "Diazepam", price: 4.0 },
+  { name: "Tramadol", price: 5.5 },
+  
 ];
+
 
 const PatientDetails = ({ patientData, doctorData, setTab }) => {
   const navigate = useNavigate();
@@ -136,6 +169,7 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
             <input
               type="number"
               id="quantity"
+              min={1}
               value={quantityInput}
               onChange={(e) => setQuantityInput(parseInt(e.target.value))}
               className="w-full border border-gray-300 rounded-md py-2 px-3"
@@ -161,7 +195,7 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
           </div>
           <div className="mb-4">
             <label htmlFor="doctorFee" className="block font-bold mb-2">
-              Doctor Fee
+              Additional Fee
             </label>
             <input
               type="number"
@@ -182,9 +216,9 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
               onChange={(e) => setVisitStatus(e.target.value)}
               className="w-full border border-gray-300 rounded-md py-2 px-3"
             >
-              <option value="">Select Status</option>
-              <option value="Cancelled">Cancelled</option>
+              {/* <option value="">Select Status</option> */}
               <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
               <option value="NoShow">No Show</option>
             </select>
           </div>
@@ -201,7 +235,7 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
           <h3 className="text-xl font-bold mb-2">Prescribed Medicines</h3>
           <ul>
             <li className="flex justify-between items-center mb-2 border p-2 rounded">
-              <span>{`doctor Fees`}</span>
+              <span>{`Additional Fees`}</span>
               <span>{doctorFee} £</span>
             </li>
             {medicines.map((medicine, index) => (

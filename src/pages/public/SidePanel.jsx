@@ -14,8 +14,8 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
   const storedStatus = localStorage.getItem("status") === "true" ? true : false;
   let userData = JSON.parse(localStorage.getItem("user"));
 
-  // console.log(doctorInfo.isApproved);
-  // console.log(doctorInfo.isAllowed);
+  const bookingLength = JSON.parse(localStorage.getItem("bookingLength"));
+  console.log(bookingLength);
 
   const [bookings, setBookings] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState(null);
@@ -27,7 +27,7 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
       try {
         setLoading(true);
         const res = await bookingService.getAvailbleBookingByDrID(doctorId);
-        console.log("booking" , res.data.data);
+        console.log("booking", res.data.data);
         setBookings(res.data.data);
         setLoading(false);
       } catch (error) {
@@ -177,12 +177,12 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
 
   return (
     <div className=" shadow-panelShadow p-3 lg:p-5 rounded-md">
-      <div className="flex items-center justify-between">
+      {/* <div className="flex items-center justify-between">
         <p className="text__para mt-0 font-semibold">Minimum Fees Price</p>
         <span className="text-[16px] leading-7 lg:text-[22px] lg:leading-8 text-headingColor font-bold">
           {ticketPrice} £
         </span>
-      </div>
+      </div> */}
 
       <div className="mt-[30px]">
         <p className="text__para mt-0 font-semibold text-headingColor">
@@ -236,10 +236,23 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
         )}
       </div>
 
-      {!loading && userData.role === "patient" ? (
-        <button onClick={bookingHandler} className="px-2 btn w-full rounded-md">
-          {storedStatus ? "Book Appointment" : "Login To Book Appointment"}
-        </button>
+      {!loading && userData?.role === "patient" ? (
+        bookingLength >= 1 ? (
+          <button
+            // onClick={bookingHandler}
+            className="px-2 btn w-full rounded-md bg-red-600 cursor-not-allowed"
+            disabled
+          >
+            {storedStatus ? "Already Booked" : "Login To Book Appointment"}
+          </button>
+        ) : (
+          <button
+            onClick={bookingHandler}
+            className="px-2 btn w-full rounded-md"
+          >
+            {storedStatus ? "Book Appointment" : "Login To Book Appointment"}
+          </button>
+        )
       ) : (
         <>
           {!loading ? (
