@@ -61,6 +61,7 @@ const MyBookings = () => {
                     <th className="py-3 px-8">Doctor</th>
                     <th className="py-3 px-8">Specialization</th>
                     <th className="py-3 px-8">Start Time</th>
+                    <th className="py-3 px-8">Action</th>
                   </tr>
                 </thead>
                 {appointment?.map((doctor) => (

@@ -87,6 +87,15 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
     ) + doctorFee;
 
   const handleSubmit = async () => {
+
+    let paidStatus
+
+    if(visitStatus === "Cancelled"){
+      paidStatus = "Cancelled"
+    }else{
+      paidStatus = "unpaid"
+    }
+
     const prescriptionData = {
       medicines: medicines,
       doctorFee: doctorFee,
@@ -97,7 +106,7 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
       patientId: patientData?.patientId._id,
       visitedDate: new Date(),
       bookingId: patientData?._id,
-      paidStatus: "unpaid",
+      paidStatus: paidStatus,
     };
     const res = await doctoreService.givePrescription(prescriptionData);
 
@@ -122,7 +131,7 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
     We apologize again for any inconvenience and look forward to assisting you further.
 
     Best regards,
-    MediCare+
+    Hospital Management System
     `;
 
     const options = {
@@ -134,6 +143,7 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
 
     const res = await authenticationService.sendMails(options);
     if (res.status === 200) {
+      
       toast.success("Email Send");
     }
   };
@@ -216,7 +226,7 @@ const PatientDetails = ({ patientData, doctorData, setTab }) => {
               onChange={(e) => setVisitStatus(e.target.value)}
               className="w-full border border-gray-300 rounded-md py-2 px-3"
             >
-              {/* <option value="">Select Status</option> */}
+              <option value="">Select Status</option>
               <option value="Completed">Completed</option>
               <option value="Cancelled">Cancelled</option>
               <option value="NoShow">No Show</option>

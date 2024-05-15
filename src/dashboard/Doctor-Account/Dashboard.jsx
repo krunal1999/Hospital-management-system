@@ -87,7 +87,7 @@ const Dashboard = () => {
                           className="w-full"
                         /> */}
                         <img
-                          className="w-full "
+                          className="w-full max-h-36"
                           src={
                             doctorData?.loggedUser.photo
                               ? doctorData?.loggedUser.photo

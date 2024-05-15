@@ -55,7 +55,6 @@ const Profile = ({ userData }) => {
 
       if (res.status === 200) {
         toast.success("Profile data Updated");
-        
       } else {
         toast.error("Profile data Not Updated");
       }
@@ -106,6 +105,8 @@ const Profile = ({ userData }) => {
 
         <div className="mb-5">
           <input
+            required
+            min={0}
             type="number"
             value={formData.phone}
             onChange={handleInputChange}
@@ -117,6 +118,7 @@ const Profile = ({ userData }) => {
 
         <div className="mb-5">
           <input
+          required
             type="string"
             value={formData.address}
             onChange={handleInputChange}
@@ -128,6 +130,8 @@ const Profile = ({ userData }) => {
 
         <div className="mb-5">
           <input
+          required
+          min={1}
             type="number"
             value={formData.age}
             onChange={handleInputChange}
@@ -139,6 +143,7 @@ const Profile = ({ userData }) => {
 
         <div className="mb-5">
           <input
+          required
             type="text"
             value={formData.bloodType}
             onChange={handleInputChange}
@@ -152,6 +157,7 @@ const Profile = ({ userData }) => {
           <label className="text-headingColor font-bold text-[16px] leading-7]">
             Gender:
             <select
+            required
               name="gender"
               value={formData.gender}
               onChange={handleInputChange}
@@ -177,6 +183,7 @@ const Profile = ({ userData }) => {
           )}
           <div className="relative inline-block w-[130px] h-[50px]">
             <input
+            required
               className="custom-file-input absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
               id="customFile"
               name="photo"

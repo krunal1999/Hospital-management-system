@@ -73,7 +73,7 @@ We have dispatched your medicines to the provided address. If you have any furth
 Thank you for choosing our services.
 
 Best regards,
-MediCare+
+Hospital Management System
 
     `;
 

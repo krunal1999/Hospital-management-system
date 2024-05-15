@@ -5,9 +5,9 @@ import uploadImageToCloudinary from "../../utils/uploadCloudinary.js";
 import { toast } from "react-toastify";
 import doctoreService from "../../services/DoctorService.js";
 
-const Profile = ({ doctorData , setTab }) => {
+const Profile = ({ doctorData, setTab }) => {
   const [selectedFile, setSelectedFile] = useState(null);
-  
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -56,13 +56,23 @@ const Profile = ({ doctorData , setTab }) => {
     e.preventDefault();
 
     try {
+      if (formData.timeSlots.length < 1) {
+        throw new Error("Please add TimeSlots");
+      }
+      if (formData.experiences.length < 1) {
+        throw new Error("Please add experiences");
+      }
+      if (formData.qualifications.length < 1) {
+        throw new Error("Please add qualifications");
+      }
+
       const id = doctorData?.loggedUser._id;
       console.log(id);
       const res = await doctoreService.updateDoctorProfile(id, formData);
       toast.success("Profile data Updated");
-      setTab("overview")
+      window.location.reload(true);
     } catch (error) {
-      toast.error(error);
+      toast.error(error.message);
       console.log(error);
     }
   };
@@ -238,6 +248,7 @@ const Profile = ({ doctorData , setTab }) => {
                 value={formData.gender}
                 onChange={handleInputChange}
                 className="form__input py-3.5"
+                required
               >
                 <option value="">Select</option>
                 <option value="male">Male</option>
@@ -252,6 +263,7 @@ const Profile = ({ doctorData , setTab }) => {
                 value={formData.specialization}
                 onChange={handleInputChange}
                 className="form__input py-3.5"
+                required
               >
                 <option value="">Select</option>
                 <option value="surgeon">Surgeon</option>
@@ -262,21 +274,24 @@ const Profile = ({ doctorData , setTab }) => {
                 <option value="audiovestibular">Audiovestibular</option>
                 <option value="histopathology">Histopathology</option>
 
-                <option value="Obstetrics and Gynaecology">Obstetrics and Gynaecology </option>
+                <option value="Obstetrics and Gynaecology">
+                  Obstetrics and Gynaecology{" "}
+                </option>
                 <option value="Paediatrics">Paediatrics</option>
                 <option value="Pathology">Pathology</option>
 
-                <option value="Plastic and Reconstructive Surgery">Plastic and Reconstructive Surgery</option>
+                <option value="Plastic and Reconstructive Surgery">
+                  Plastic and Reconstructive Surgery
+                </option>
                 <option value="Rheumatology">Rheumatology</option>
-                <option value="Rehabilitation Medicine">Rehabilitation Medicine</option>
+                <option value="Rehabilitation Medicine">
+                  Rehabilitation Medicine
+                </option>
 
                 <option value="Labor & Delivery">Labor & Delivery</option>
                 <option value="Heart & Vascular">Heart & Vascular</option>
                 <option value="Mental Health">Mental Health</option>
                 <option value="Burn Treatment">Burn Treatment</option>
-
-
-
               </select>
             </div>
 
@@ -308,6 +323,7 @@ const Profile = ({ doctorData , setTab }) => {
                       value={item.startingDate}
                       className="form__input"
                       onChange={(e) => handleQualificationChange(e, index)}
+                      required
                     />
                   </div>
 
@@ -319,6 +335,7 @@ const Profile = ({ doctorData , setTab }) => {
                       value={item.endingDate}
                       className="form__input"
                       onChange={(e) => handleQualificationChange(e, index)}
+                      required
                     />
                   </div>
                 </div>
@@ -332,6 +349,7 @@ const Profile = ({ doctorData , setTab }) => {
                       className="form__input"
                       placeholder="Degree"
                       onChange={(e) => handleQualificationChange(e, index)}
+                      required
                     />
                   </div>
 
@@ -344,6 +362,7 @@ const Profile = ({ doctorData , setTab }) => {
                       className="form__input"
                       placeholder="University"
                       onChange={(e) => handleQualificationChange(e, index)}
+                      required
                     />
                   </div>
                 </div>
@@ -380,6 +399,7 @@ const Profile = ({ doctorData , setTab }) => {
                       value={item.startingDate}
                       className="form__input"
                       onChange={(e) => handleExperienceChange(e, index)}
+                      required
                     />
                   </div>
 
@@ -391,6 +411,7 @@ const Profile = ({ doctorData , setTab }) => {
                       value={item.endingDate}
                       className="form__input"
                       onChange={(e) => handleExperienceChange(e, index)}
+                      required
                     />
                   </div>
                 </div>
@@ -404,11 +425,12 @@ const Profile = ({ doctorData , setTab }) => {
                       className="form__input"
                       placeholder="Position"
                       onChange={(e) => handleExperienceChange(e, index)}
+                      required
                     />
                   </div>
 
                   <div>
-                    <p className="form__label">University*</p>
+                    <p className="form__label">Hospital Name*</p>
                     <input
                       type="text"
                       name="hospital"
@@ -416,6 +438,7 @@ const Profile = ({ doctorData , setTab }) => {
                       className="form__input"
                       placeholder="Hospital"
                       onChange={(e) => handleExperienceChange(e, index)}
+                      required
                     />
                   </div>
                 </div>
@@ -450,6 +473,7 @@ const Profile = ({ doctorData , setTab }) => {
                     name="day"
                     value={item.day}
                     className="form__input py-3.5"
+                    required
                   >
                     <option value="">Select</option>
                     <option value="saturday">Saturday</option>
@@ -472,6 +496,7 @@ const Profile = ({ doctorData , setTab }) => {
                     step={1800}
                     min="00:00"
                     max="23:00"
+                    required
                   />
                 </div>
 
@@ -486,6 +511,7 @@ const Profile = ({ doctorData , setTab }) => {
                     step={1800}
                     min="00:00"
                     max="23:00"
+                    required
                   />
                 </div>
 
@@ -500,6 +526,7 @@ const Profile = ({ doctorData , setTab }) => {
                     step={3600}
                     min="00:00"
                     max="23:00"
+                    required
                   />
                 </div>
 

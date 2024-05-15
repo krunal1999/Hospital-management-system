@@ -116,7 +116,7 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
     We look forward to seeing you at the appointment.
     
     Best regards,
-    MediCare+
+    Hospital Management System
     `;
 
     const options = {
@@ -165,7 +165,7 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
       if (res.status === 200) {
         setLoading(false);
         navigate("/admin/profile");
-        toast.success("Doctor Has Been Approved");
+        toast.success("Doctor Status Changed");
       } else {
         setLoading(false);
         toast.error("Failed To Update Doctor");
@@ -278,7 +278,7 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
                 <button
                   onClick={bookingAvailablehandler}
                   className="px-2 btn w-full rounded-md bg-green-600"
-                  disabled={userData.role === "doctor"}
+                  // disabled={userData.role === "doctor"}
                 >
                   Doctor Available
                 </button>
@@ -286,7 +286,7 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId, doctorInfo }) => {
                 <button
                   onClick={bookingAvailablehandler}
                   className="px-2 btn w-full rounded-md bg-red-600"
-                  disabled={userData.role === "doctor"}
+                  // disabled={userData.role === "doctor"}
                 >
                   Doctor Not Available
                 </button>
