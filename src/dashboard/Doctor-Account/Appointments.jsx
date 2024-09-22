@@ -75,12 +75,14 @@ const Appointments = ({ setTab, setPatientData }) => {
     Hospital Management System
     `;
 
+
     const options = {
       from: conf.sendigFrom,
       to: data?.patientId?.userId?.email,
       subject: subject,
       text: text,
     };
+    
 
     const res = await authenticationService.sendMails(options);
     if (res.status === 200) {

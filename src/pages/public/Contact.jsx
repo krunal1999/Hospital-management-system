@@ -4,7 +4,7 @@ import authenticationService from "../../services/AuthenticationService";
 import { toast } from "react-toastify";
 
 const Contact = () => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("krunaldhavle1546@gmail.com");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
 
@@ -42,16 +42,17 @@ const Contact = () => {
         <form action="#" className="space-y-8">
           <div>
             <label htmlFor="email" className="form__label ">
-              Your email
+              Send email to:
             </label>
             <input
               type="email"
               id="email"
               value={email}
               className="form__input mt-1"
-              placeholder="example@gmail.com"
+              placeholder="krunaldhavle1546@gmail.com"
               required
               onChange={(e) => setEmail(e.target.value)}
+              disabled
             />
           </div>
           <div>
